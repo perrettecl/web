@@ -1,0 +1,47 @@
+body
+{
+	background-color: rgb(251,251,251);
+}
+
+.menu-gauche
+{
+	height: 100%;
+	background-color: #FFFFFF;
+}
+
+.nav-wrapper .brand-logo 
+{
+	margin-left: 5px;
+}
+
+.nav-wrapper
+{
+	background-color: black;
+}
+
+.nav-wrapper ul li:hover
+{
+	background-color: black;
+}
+
+nav ul li:hover
+{
+	background-color: black;
+}
+
+.btn-banner 
+{
+	margin-right: 5px;
+	background-color: #D00000;
+}
+
+.btn-banner:hover
+{
+	margin-right: 5px;
+	background-color: #A00000;
+}
+
+.corps h1
+{
+	font-size: 2.5em;
+}
