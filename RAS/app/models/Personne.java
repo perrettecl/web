@@ -99,4 +99,13 @@ public class Personne extends Model {
 		return new String(bytesOfDigeste);
 	}
 	
+	public static Personne connect(String email, String mdp)
+	{
+		Personne retour = null;
+		
+		
+		
+		return retour;
+	}
+	
 }
