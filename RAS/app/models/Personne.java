@@ -20,7 +20,20 @@ public class Personne extends Model {
 	private String nom;
 	private String prenom;
 	private String telephone;
-    
+	private String adresse;
+	private String codepostal;
+	private String ville;
+	private boolean admin;
+	
+	@OneToMany(mappedBy="utilisateur")
+	private Collection<Carte> cartes;
+	
+	@ManyToMany(mappedBy="responsables")
+	private Collection<Personne> zonesResponsable;
+	
+	@ManyToMany(mappedBy="personnesAutorise")
+	private Collection<Personne> zonesAutorise;
+	
 	public Personne(String email,String nom, String prenom, String telephone) throws Exception
 	{
 		this.email = email;
@@ -36,8 +49,25 @@ public class Personne extends Model {
 		
 		//creation du mdp par defaut
 		this.motDePasse = encodeMotDePasse(nom.toUpperCase());
+
 	}
 	
+	
+	public Personne(String email, String nom, String prenom, String telephone,
+			String adresse, String codepostal, String ville) {
+		this.email = email;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.telephone = telephone;
+		this.adresse = adresse;
+		this.codepostal = codepostal;
+		this.ville = ville;
+		
+
+		//creation du mdp par defaut
+		this.motDePasse = encodeMotDePasse(nom.toUpperCase());
+	}
+
 
 	public String getEmail() {
 		return email;
@@ -80,7 +110,62 @@ public class Personne extends Model {
 		this.telephone = telephone;
 	}
 	
-	public static String encodeMotDePasse(String mdp)
+	public String getAdresse() {
+		return adresse;
+	}
+
+
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
+
+
+	public String getCodepostal() {
+		return codepostal;
+	}
+
+
+	public void setCodepostal(String codepostal) {
+		this.codepostal = codepostal;
+	}
+
+
+	public String getVille() {
+		return ville;
+	}
+
+
+	public void setVille(String ville) {
+		this.ville = ville;
+	}
+
+
+	public boolean isAdmin() {
+		return admin;
+	}
+
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+
+
+	public Collection<Carte> getCartes() {
+		return cartes;
+	}
+
+
+	public Collection<Personne> getZonesResponsable() {
+		return zonesResponsable;
+	}
+
+
+	public Collection<Personne> getZonesAutorise() {
+		return zonesAutorise;
+	}
+
+
+	private static String encodeMotDePasse(String mdp)
 	{
 		String grain ="Az19@!";
 		
@@ -100,12 +185,18 @@ public class Personne extends Model {
 	}
 	
 	public static Personne connect(String email, String mdp)
-	{
-		Personne retour = null;
+	{		
+		Personne retour = Personne.find("byEmail", email).first();
 		
-		
-		
-		return retour;
+		if(retour != null && retour.verifMotDePasse(mdp))
+		{
+			return retour;
+		}
+		else
+		{
+			return null;	
+		}
+			
 	}
 	
 }
