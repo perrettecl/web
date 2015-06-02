@@ -1,0 +1,140 @@
+<html>
+<head>
+
+	<title>RAS</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta charset="UTF-8">
+	<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="materialize/css/style.css">
+
+</head>
+<body>
+	<nav>
+		<div class="nav-wrapper">
+			<a href="#!" class="brand-logo">Remote Access Security</a>
+			<ul class="right hide-on-med-and-down">
+				<li><a class="waves-effect waves-light btn btn-banner">Se déconnecter</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="row">
+		<section>
+			<ul class="collection with-header col s12 m12 l2 z-depth-1 menu-gauche">
+				<li class="collection-header"><h4>Utilisateurs <a class="btn-floating waves-effect waves-light green right"><i class="mdi-content-add" title="Créer un utilisateur"></i></a></h4></li>
+				<form>
+					<div class="input-field">
+					<input id="search" type="search" required>
+					<label for="search"><i class="mdi-action-search"></i></label>
+					<i class="mdi-navigation-close"></i>
+					</div>
+				</form>
+				
+				<li class="collection-item"><a href="#!">John John</a></li>
+			</ul>
+		</section>
+		
+		<section class="corps col s12 m12 l10">
+			<h1>Jean Dupont</h1>
+			
+			<fieldset>
+				<legend>Informations générales</legend>
+				<div class="row">
+					<form class="col s12">
+						<div class="input-field col s12 m6 l6">
+							<i class="mdi-action-account-circle prefix"></i>
+							<input id="icon_prefix" type="text" class="validate" id="nom" name="nom">
+							<label for="icon_prefix">Nom</label>
+						</div>
+						<div class="input-field col s12 m6 l6">
+							<i class="mdi-action-account-circle prefix"></i>
+							<input id="icon_telephone" type="text" class="validate" id="prenom" name="prenom">
+							<label for="icon_telephone">Prénom</label>
+						</div>
+						<div class="input-field col s12 m6 l6">
+							<i class="mdi-communication-email prefix"></i>
+							<input id="icon_prefix" type="email" class="validate" id="email" name="email">
+							<label for="icon_prefix">Email</label>
+						</div>
+						<div class="input-field col s12 m6 l6">
+							<i class="mdi-communication-phone prefix"></i>
+							<input id="icon_telephone" type="tel" class="validate" id="telephone" name="telephone">
+							<label for="icon_telephone">Téléphone</label>
+						</div>
+						<div class="input-field col s12 m12 l12">
+							<i class="mdi-communication-business prefix"></i>
+							<input id="icon_prefix" type="text" class="validate" id="adresse" name="adresse">
+							<label for="icon_prefix">Adresse</label>
+						</div>
+						<div class="input-field col s12 m6 l6">
+							<i class="mdi-communication-business prefix"></i>
+							<input id="icon_prefix" type="text" class="validate" id="code-postal" name="code-postal">
+							<label for="icon_prefix">Code postal</label>
+						</div>
+						<div class="input-field col s12 m6 l6">
+							<i class="mdi-communication-business prefix"></i>
+							<input id="icon_telephone" type="text" class="validate" id="ville" name="ville">
+							<label for="icon_telephone">Ville</label>
+						</div>
+					</form>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>Responsable des zones</legend>
+				<p><em>Aucune zone à afficher</em></p>
+			<!--	<table class="hoverable responsive-table">
+					<thead>
+						<tr>
+							<th>Nom</th>
+							<th>Prénom</th>
+							<th>Adresse, Service...</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Bidon</td>
+							<td>Jacques</td>
+							<td>Blablabla</td>
+						</tr>
+						<tr>
+							<td>Donbi</td>
+							<td>Jean-Paul</td>
+							<td>Blablabla</td>
+						</tr>
+					<tbody>
+				</table>
+			-->
+			</fieldset>
+			<fieldset>
+				<legend>Zones autorisées</legend>
+				<table class="hoverable responsive-table">
+					<thead>
+						<tr>
+							<th>Nom</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Zone 1</td>
+						</tr>
+						<tr>
+							<td>Zone 1.4</td>
+						</tr>
+					<tbody>
+				</table>
+			</fieldset>
+		</section>
+	</div>
+
+	
+
+	<!-- jQuery is required by Materialize to function -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+	<script type="text/javascript">
+	//custom JS code
+	</script>
+
+</body>
+</html>
+
