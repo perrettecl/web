@@ -26,13 +26,13 @@ public class Personne extends Model {
 	private boolean admin;
 	
 	@OneToMany(mappedBy="utilisateur")
-	private Collection<Carte> cartes;
+	private Set<Carte> cartes = new HashSet<Carte>();
 	
-	@ManyToMany(mappedBy="responsables")
-	private Collection<Personne> zonesResponsable;
+	@ManyToMany(targetEntity=models.Zone.class,mappedBy="responsables")
+	private Set<Zone> zonesResponsable = new HashSet<Zone>();
 	
-	@ManyToMany(mappedBy="personnesAutorise")
-	private Collection<Personne> zonesAutorise;
+	@ManyToMany(targetEntity=models.Zone.class, mappedBy="personnesAutorise")
+	private Set<Zone> zonesAutorise = new HashSet<Zone>();
 	
 	public Personne(String email,String nom, String prenom, String telephone) throws Exception
 	{
@@ -49,6 +49,7 @@ public class Personne extends Model {
 		
 		//creation du mdp par defaut
 		this.motDePasse = encodeMotDePasse(nom.toUpperCase());
+		
 
 	}
 	
@@ -150,17 +151,17 @@ public class Personne extends Model {
 	}
 
 
-	public Collection<Carte> getCartes() {
+	public Set<Carte> getCartes() {
 		return cartes;
 	}
 
 
-	public Collection<Personne> getZonesResponsable() {
+	public Set<Zone> getZonesResponsable() {
 		return zonesResponsable;
 	}
 
 
-	public Collection<Personne> getZonesAutorise() {
+	public Set<Zone> getZonesAutorise() {
 		return zonesAutorise;
 	}
 

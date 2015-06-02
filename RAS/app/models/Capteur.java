@@ -13,6 +13,22 @@ import java.util.*;
 
 @Entity
 public class Capteur extends Model {
+		
+	@ManyToOne
+	private Zone position;
+	
+	@ManyToOne
+	private Zone acces;
+
+	private String info;
+
+	public Capteur(Zone position, Zone acces, String info) {
+		super();
+		this.position = position;
+		//this.acces = acces;
+		this.info = info;
+	}
+	
 	
 	public Zone getPosition() {
 		return position;
@@ -22,13 +38,13 @@ public class Capteur extends Model {
 		this.position = position;
 	}
 
-	public Zone getAcces() {
+	/*public Zone getAcces() {
 		return acces;
 	}
 
 	public void setAcces(Zone acces) {
 		this.acces = acces;
-	}
+	}*/
 
 	public String getInfo() {
 		return info;
@@ -42,23 +58,6 @@ public class Capteur extends Model {
 		return id;
 	}
 
-	@Id
-	private long id;
-	
-	@ManyToOne
-	private Zone position;
-	
-	@ManyToOne
-	private Zone acces;
-
-	private String info;
-
-	public Capteur(Zone position, Zone acces, String info) {
-		super();
-		this.position = position;
-		this.acces = acces;
-		this.info = info;
-	}
 	
 	
 	

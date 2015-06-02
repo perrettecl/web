@@ -14,8 +14,7 @@ import java.util.*;
 @Entity
 public class Zone extends Model {
 	
-	@Id
-	private long id;
+	
 	private String Nom;
 	private String adresse;
 	private String codePostal;
@@ -23,23 +22,31 @@ public class Zone extends Model {
 	private String info;
 	private boolean accesExclusif;
 	
-	@ManyToMany(mappedBy="zonesResponsable")
-	private Collection<Personne> responsables;
+	@ManyToMany(targetEntity=models.Personne.class)
+	private Set<Personne> responsables;
 	
-	@ManyToMany(mappedBy="zonesAutorise")
-	private Collection<Personne> personnesAutorise;
+	@ManyToMany(targetEntity=models.Personne.class)
+	private Set<Personne> personnesAutorise;
 	
-	@OneToMany(mappedBy="position")
-	private Collection<Capteur> capteurDeLaZone;
+	@OneToMany(targetEntity = models.Capteur.class, mappedBy= "position")
+	private Set<Capteur> capteurDepuisZone;
 	
-	@OneToMany(mappedBy="acces")
-	private Collection<Capteur> capteurDonnantSurZone;
+	@OneToMany(targetEntity = models.Capteur.class, mappedBy= "acces")
+	private Set<Capteur> capteurVersZone;
 	
-	@ManyToMany(mappedBy="fils")
-	private Collection<Zone> peres;
+	public Set<Capteur> getCapteurDeLaZone() {
+		return capteurDepuisZone;
+	}
+
+	public Set<Capteur> getCapteurDonnantSurZone() {
+		return capteurVersZone;
+	}
+	
+	@ManyToMany
+	private Set<Zone> peres;
 	
 	@ManyToMany(mappedBy="peres")
-	private Collection<Zone> fils;
+	private Set<Zone> fils;
 	
 	
 	public String getNom() {
@@ -94,27 +101,20 @@ public class Zone extends Model {
 		return id;
 	}
 
-	public Collection<Personne> getResponsables() {
+	public Set<Personne> getResponsables() {
 		return responsables;
 	}
 
-	public Collection<Personne> getPersonnesAutorise() {
+	public Set<Personne> getPersonnesAutorise() {
 		return personnesAutorise;
 	}
 
-	public Collection<Capteur> getCapteurDeLaZone() {
-		return capteurDeLaZone;
-	}
 
-	public Collection<Capteur> getCapteurDonnantSurZone() {
-		return capteurDonnantSurZone;
-	}
-
-	public Collection<Zone> getPeres() {
+	public Set<Zone> getPeres() {
 		return peres;
 	}
 
-	public Collection<Zone> getFils() {
+	public Set<Zone> getFils() {
 		return fils;
 	}
 	
