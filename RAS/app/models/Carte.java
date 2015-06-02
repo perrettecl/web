@@ -14,8 +14,7 @@ import java.util.*;
 @Entity
 public class Carte extends Model {
 	
-	@Id
-	private long numero;
+	private String numero;
 	private Date dateCreation;
 	private Date dateExpiration;
 	private boolean valide;
@@ -53,13 +52,14 @@ public class Carte extends Model {
 
 	public void setUtilisateur(Personne utilisateur) {
 		this.utilisateur = utilisateur;
+		utilisateur.getCartes().add(this);
 	}
 
-	public long getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 
-	public Carte(long numero, Date dateCreation, Date dateExpiration) {
+	public Carte(String numero, Date dateCreation, Date dateExpiration) {
 		super();
 		this.numero = numero;
 		this.dateCreation = dateCreation;
