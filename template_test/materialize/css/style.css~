@@ -9,7 +9,6 @@ body
 	background-color: #FFFFFF;
 }
 
-
 .nav-wrapper .brand-logo 
 {
 	margin-left: 5px;
@@ -45,4 +44,43 @@ nav ul li:hover
 .corps h1
 {
 	font-size: 2.5em;
+}
+
+.corps h1 input
+{
+	font-size: 1em;
+}
+
+.corps h1 a
+{
+	font-size: 0.5em;
+}
+
+.corps h2
+{
+	font-size: 2em;
+}
+
+.corps h5
+{
+	font-weight: bold;
+	font-size: 1.1em;
+}
+
+legend
+{
+	font-weight: bold;
+	color: black;
+	font-size: 1.2em;
+}
+
+label
+{
+	color: black;
+	font-size: 1.1em;
+}
+
+fieldset
+{
+	margin-bottom: 1.5%;
 }

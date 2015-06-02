@@ -15,10 +15,8 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.playframework.playclipse.playNature</nature>
 	</natures>
-	<linkedResources><link><name>docviewer</name><type>2</type><location>/user/6/.base/perrettc/home/web/modules/docviewer/app</location></link>
-<link><name>public/docviewer</name><type>2</type><location>/user/6/.base/perrettc/home/web/modules/docviewer/public</location></link>
+	<linkedResources><link><name>docviewer</name><type>2</type><location>/opt/play/modules/docviewer/app</location></link>
+<link><name>public/docviewer</name><type>2</type><location>/opt/play/modules/docviewer/public</location></link>
 <link><name>crud</name><type>2</type><location>/user/6/.base/perrettc/home/web/modules/crud/app</location></link>
-<link><name>conf/crud</name><type>2</type><location>/user/6/.base/perrettc/home/web/modules/crud/conf</location></link>
-<link><name>public/crud</name><type>2</type><location>/user/6/.base/perrettc/home/web/modules/crud/public</location></link>
 </linkedResources>
 </projectDescription>
