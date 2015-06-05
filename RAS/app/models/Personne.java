@@ -200,4 +200,20 @@ public class Personne extends Model {
 			
 	}
 	
+	public void addCarte(Carte c){
+		cartes.add(c);
+		c.setUtilisateur(this);
+		
+		this.save();
+		c.save();
+		
+		this.refresh();
+	}
+	
+	public void invaliderCarte(Carte c){
+		c.setValide(false);
+		c.save();
+		this.refresh();
+	}
+	
 }

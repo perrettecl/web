@@ -28,6 +28,7 @@ public class Carte extends Model {
 
 	public void setDateCreation(Date dateCreation) {
 		this.dateCreation = dateCreation;
+		this.save();
 	}
 
 	public Date getDateExpiration() {
@@ -36,14 +37,20 @@ public class Carte extends Model {
 
 	public void setDateExpiration(Date dateExpiration) {
 		this.dateExpiration = dateExpiration;
+		this.save();
 	}
 
 	public boolean isValide() {
-		return valide;
+		if(!valide){
+			return valide;
+		} else {
+			return (new Date().compareTo(dateExpiration) <= 0);
+		}
 	}
 
 	public void setValide(boolean valide) {
 		this.valide = valide;
+		this.save();
 	}
 
 	public Personne getUtilisateur() {
@@ -52,7 +59,7 @@ public class Carte extends Model {
 
 	public void setUtilisateur(Personne utilisateur) {
 		this.utilisateur = utilisateur;
-		utilisateur.getCartes().add(this);
+		this.save();
 	}
 
 	public String getNumero() {
@@ -64,6 +71,8 @@ public class Carte extends Model {
 		this.numero = numero;
 		this.dateCreation = dateCreation;
 		this.dateExpiration = dateExpiration;
+		
+		this.save();
 	}
 	
 }
