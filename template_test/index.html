@@ -134,7 +134,7 @@
 	<script type="text/javascript">
 	//custom JS code
 		numNouvelleZone = 0;
-		
+
 		function modifierNomZone() {
 			var nomZone = $("#spanNomZone").html();
 						
@@ -150,10 +150,10 @@
 			});
 			          
 		}
-		
+
 		function creerZone(idZone) {
 			var idNouvelleZone = numNouvelleZone++;
-		
+
 			$("#liste-zones").append('<input type="text" class="collection-item" name="nouvelle-zone" id="' + idNouvelleZone +'" placeHolder="Nom de la nouvelle zone" />');
 			$("#" + idNouvelleZone).keyup(function(e){
 				if(e.keyCode == 13)
@@ -162,14 +162,13 @@
 				}
 			});
 		}
-		
+
 		function submitNouvelleZone(input) {
-			alert(input.value);
+			alert(input);
 			
 			//ajax
-			
 		}
-		
+
 		function submitNomZone() {
 			var nomZone = $("#inputNomZone").val();
 			
@@ -178,12 +177,13 @@
 			
  			if(erreur) {
 				$("#inputNomZone").addClass("invalid");
-				alert("Erreur");
+				Materialize.toast('<span>Erreur lors de la modification</span>&nbsp;<i class="mdi-navigation-close prefix active"></i>', 5000, 'red');
 				
 			} else {
 				$("#titreZone").empty();
 				$("#titreZone").append('<span id="spanNomZone">' + nomZone + '</span> ');
 				$("#titreZone").append('<a class="btn-floating waves-effect waves-light grey" href="javascript:modifierNomZone()"><i class="tiny mdi-image-edit"></i></a>');
+				Materialize.toast('<span>Nom de la zone modifié</span>&nbsp;<i class="mdi-action-done prefix active"></i>', 5000, 'green');
 			}
 		}
 	</script>

@@ -55,6 +55,7 @@ public class Zone extends Model {
 
 	public void setNom(String nom) {
 		this.nom = nom;
+		this.save();
 	}
 
 	public String getAdresse() {
@@ -63,6 +64,7 @@ public class Zone extends Model {
 
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
+		this.save();
 	}
 
 	public String getCodePostal() {
@@ -71,6 +73,7 @@ public class Zone extends Model {
 
 	public void setCodePostal(String codePostal) {
 		this.codePostal = codePostal;
+		this.save();
 	}
 
 	public String getVille() {
@@ -79,6 +82,7 @@ public class Zone extends Model {
 
 	public void setVille(String ville) {
 		this.ville = ville;
+		this.save();
 	}
 
 	public String getInfo() {
@@ -87,6 +91,7 @@ public class Zone extends Model {
 
 	public void setInfo(String info) {
 		this.info = info;
+		this.save();
 	}
 
 	public boolean isAccesExclusif() {
@@ -95,6 +100,7 @@ public class Zone extends Model {
 
 	public void setAccesExclusif(boolean accesExclusif) {
 		this.accesExclusif = accesExclusif;
+		this.save();
 	}
 
 	public Long getId() {
@@ -118,4 +124,48 @@ public class Zone extends Model {
 		return fils;
 	}
 	
+	
+	public void addPersonneAutorise(Personne p)
+	{
+		personnesAutorise.add(p);
+		p.getZonesAutorise().add(this);
+		
+		p.save();
+		this.save();
+		
+		this.refresh();
+	}
+	
+	public void addResponsable(Personne p)
+	{
+		responsables.add(p);
+		p.getZonesResponsable().add(this);
+		
+		p.save();
+		this.save();
+		
+		this.refresh();
+	}
+	
+	public void removePersonneAutorise(Personne p)
+	{
+		personnesAutorise.remove(p);
+		p.getZonesAutorise().remove(this);
+		
+		p.save();
+		this.save();
+		
+		this.refresh();
+	}
+	
+	public void removeResponsable(Personne p)
+	{
+		responsables.remove(p);
+		p.getZonesResponsable().remove(this);
+		
+		p.save();
+		this.save();
+		
+		this.refresh();
+	}
 }

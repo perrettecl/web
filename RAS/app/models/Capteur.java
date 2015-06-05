@@ -23,10 +23,19 @@ public class Capteur extends Model {
 	private String info;
 
 	public Capteur(Zone position, Zone acces, String info) {
-		super();
 		this.position = position;
-		//this.acces = acces;
+		this.acces = acces;
 		this.info = info;
+		
+		this.save();
+		
+		position.getCapteurDeLaZone().add(this);
+		acces.getCapteurDonnantSurZone().add(this);
+		
+		position.save();
+		acces.save();
+		
+		this.refresh();
 	}
 	
 	
@@ -36,15 +45,17 @@ public class Capteur extends Model {
 
 	public void setPosition(Zone position) {
 		this.position = position;
+		this.save();
 	}
 
-	/*public Zone getAcces() {
+	public Zone getAcces() {
 		return acces;
 	}
 
 	public void setAcces(Zone acces) {
 		this.acces = acces;
-	}*/
+		this.save();
+	}
 
 	public String getInfo() {
 		return info;
@@ -52,11 +63,9 @@ public class Capteur extends Model {
 
 	public void setInfo(String info) {
 		this.info = info;
+		this.save();
 	}
 
-	public Long getId() {
-		return id;
-	}
 
 	
 	
