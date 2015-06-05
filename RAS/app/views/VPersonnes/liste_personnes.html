@@ -1,0 +1,12 @@
+#{extends 'main.html' /}
+#{set title:'This is a test' /}
+
+Here goes your content.
+
+<ul>
+#{list items:liste, as:'personne'}
+	<li>
+		${personne.nom}
+	</li>
+#{/list}
+</ul>

@@ -1,0 +1,115 @@
+#{extends 'main.html' /}
+#{set title:'Fiche utilisateur' /}
+
+<div class="row">
+		<section>
+			<ul class="collection with-header col s12 m12 l2 z-depth-1 menu-gauche">
+				<li class="collection-header"><h4>Utilisateurs <a class="btn-floating waves-effect waves-light green right"><i class="mdi-content-add" title="Créer un utilisateur"></i></a></h4></li>
+				<form>
+					<div class="input-field">
+					<input id="search" type="search" required>
+					<label for="search"><i class="mdi-action-search"></i></label>
+					<i class="mdi-navigation-close"></i>
+					</div>
+				</form>
+			</ul>
+		</section>
+		
+		<section class="corps col s12 m12 l10">
+			<h1>${user.prenom + " " + user.nom}</h1>
+			
+			<fieldset>
+				<legend>Informations générales</legend>
+				<div class="row">
+					<form class="col s12">
+						<div class="input-field col s12 m6 l6">
+							<i class="mdi-action-account-circle prefix"></i>
+							<input type="text" class="validate" id="nom" name="nom" value="${user.nom}">
+							<label for="nom">Nom</label>
+						</div>
+						<div class="input-field col s12 m6 l6">
+							<i class="mdi-action-account-circle prefix"></i>
+							<input type="text" class="validate" id="prenom" name="prenom" value="${user.prenom}">
+							<label for="prenom">Prénom</label>
+						</div>
+						<div class="input-field col s12 m6 l6">
+							<i class="mdi-communication-email prefix"></i>
+							<input type="email" class="validate" id="email" name="email" value="${user.email}">
+							<label for="email">Email</label>
+						</div>
+						<div class="input-field col s12 m6 l6">
+							<i class="mdi-communication-phone prefix"></i>
+							<input type="tel" class="validate" id="telephone" name="telephone" value="${user.telephone}">
+							<label for="telephone">Téléphone</label>
+						</div>
+						<div class="input-field col s12 m12 l12">
+							<i class="mdi-communication-business prefix"></i>
+							<input  type="text" class="validate" id="adresse" name="adresse" value="${user.adresse}">
+							<label for="adresse">Adresse</label>
+						</div>
+						<div class="input-field col s12 m6 l6">
+							<i class="mdi-communication-business prefix"></i>
+							<input  type="text" class="validate" id="code-postal" name="code-postal" value="${user.codePostal}">
+							<label for="code-postal">Code postal</label>
+						</div>
+						<div class="input-field col s12 m6 l6">
+							<i class="mdi-communication-business prefix"></i>
+							<input type="text" class="validate" id="ville" name="ville" value="${user.ville}">
+							<label for="ville">Ville</label>
+						</div>
+					</form>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>Responsable des zones</legend>
+				#{if user.getZonesResponsable().size() == 0}
+                    <p><em>Aucune zone à afficher</em></p>
+                #{/if}
+                #{else}
+                	<table class="hoverable responsive-table">
+	                	<thead>
+							<tr>
+								<th>Nom</th>
+							</tr>
+						</thead>
+						<tbody>
+							#{list items:user.getZonesResponsable(), as:'zone'}
+							<tr>
+								<td>${zone.nom}</td>
+							</tr>
+							#{/list}
+						<tbody>
+					</table>
+         		#{/else}
+			</fieldset>
+			<fieldset>
+				<legend>Zones autorisées</legend>
+				#{if user.getZonesAutorise().size() == 0}
+                    <p><em>Aucune zone à afficher</em></p>
+                #{/if}
+                #{else}
+                	<table class="hoverable responsive-table">
+	                	<thead>
+							<tr>
+								<th>Nom</th>
+							</tr>
+						</thead>
+						<tbody>
+							#{list items:user.getZonesAutorise(), as:'zone'}
+							<tr>
+								<td>${zone.nom}</td>
+							</tr>
+							#{/list}
+						<tbody>
+					</table>
+         		#{/else}
+			</fieldset>
+		</section>
+	</div>
+	
+	<!-- jQuery is required by Materialize to function -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="@{'/public/materialize/js/materialize.min.js'}"></script>
+	<script type="text/javascript">
+	//custom JS code
+	</script>

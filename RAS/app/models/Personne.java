@@ -21,7 +21,7 @@ public class Personne extends Model {
 	private String prenom;
 	private String telephone;
 	private String adresse;
-	private String codepostal;
+	private String codePostal;
 	private String ville;
 	private boolean admin;
 	
@@ -61,7 +61,7 @@ public class Personne extends Model {
 		this.prenom = prenom;
 		this.telephone = telephone;
 		this.adresse = adresse;
-		this.codepostal = codepostal;
+		this.codePostal = codepostal;
 		this.ville = ville;
 		
 
@@ -122,12 +122,12 @@ public class Personne extends Model {
 
 
 	public String getCodepostal() {
-		return codepostal;
+		return codePostal;
 	}
 
 
 	public void setCodepostal(String codepostal) {
-		this.codepostal = codepostal;
+		this.codePostal = codepostal;
 	}
 
 

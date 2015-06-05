@@ -22,4 +22,18 @@ public class CPersonnes extends Controller {
 		
 		render("VPersonnes/liste_personnes.html", liste, title);
 	}
+	/*
+	public static void fiche() {
+		
+	}*/
+	
+	public static void fiche(long id) {
+		Personne user = Personne.find("byId", id).first();
+
+		if(user == null) {
+			render("error/404.html");
+		} else {			
+			render("VPersonnes/fiche_utilisateur.html", user);
+		}
+	}
 }

@@ -15,7 +15,7 @@ import java.util.*;
 public class Zone extends Model {
 	
 	
-	private String Nom;
+	private String nom;
 	private String adresse;
 	private String codePostal;
 	private String ville;
@@ -50,11 +50,11 @@ public class Zone extends Model {
 	
 	
 	public String getNom() {
-		return Nom;
+		return nom;
 	}
 
 	public void setNom(String nom) {
-		Nom = nom;
+		this.nom = nom;
 	}
 
 	public String getAdresse() {
