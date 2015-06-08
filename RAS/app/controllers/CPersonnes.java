@@ -1,5 +1,6 @@
 package controllers;
 
+
 import java.util.List;
 
 import play.*;
@@ -22,18 +23,32 @@ public class CPersonnes extends Controller {
 		
 		render("VPersonnes/liste_personnes.html", liste, title);
 	}
+	
+	public static void creerUtilisateur() {
 		
-	public static void fiche(long id) {
+	}
+	
+	public static void rechercheUtilisateur(String recherche) {
+		List<Personne> liste = Personne.find("byNom", recherche).fetch();
+
+		renderJSON((Object)liste);
+	}
+	
+	public static void utilisateurs(long id) {
+		render("VPersonnes/utilisateurs.html", id);
+	}
+	
+	public static void nouvelUtilisateur() {			
+		render("VPersonnes/nouvel_utilisateur.html");
+	}
+	
+	public static void getInfosUtilisateur(long id) {
 		Personne user = Personne.find("byId", id).first();
 
 		if(user == null) {
-			render("error/404.html");
+			render("VPersonnes/utilisateur_introuvable.html");
 		} else {			
 			render("VPersonnes/fiche_utilisateur.html", user);
 		}
-	}
-	
-	public static void nouvelUtilisateur() {
-		render("VPersonnes/fiche_utilisateur.html");
 	}
 }

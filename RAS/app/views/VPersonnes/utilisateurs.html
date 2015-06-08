@@ -1,0 +1,32 @@
+#{extends 'main.html' /}
+#{set title:'Fiche utilisateur' /}
+
+<div class="row">
+		<section>
+			<ul class="collection with-header col s12 m12 l2 z-depth-1 menu-gauche" id="liste-utilisateurs">
+				<li class="collection-header"><h4>Utilisateurs <a class="btn-floating waves-effect waves-light green right" href="javascript:nouvelUtilisateur()"><i class="mdi-content-add" title="Créer un utilisateur"></i></a></h4></li>
+				<form>
+					<div class="input-field">
+					<input id="search" type="search" required>
+					<label for="search"><i class="mdi-action-search"></i></label>
+					<i class="mdi-navigation-close"></i>
+					</div>
+				</form>
+			</ul>
+		</section>
+		
+		<section class="corps col s12 m12 l10" id="corps">
+		</section>
+	</div>
+	
+	<!-- jQuery is required by Materialize to function -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="@{'/public/materialize/js/materialize.min.js'}"></script>
+	<script type="text/javascript" src="@{'/public/javascripts/utilisateurs.js'}"></script>
+	<script type="text/javascript">
+	//custom JS code
+		$(window).bind("load",init);
+		#{if id > 0}
+			getInfosUtilisateur(${id});
+		#{/if}
+	</script>
