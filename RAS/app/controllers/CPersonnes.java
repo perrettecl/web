@@ -22,11 +22,7 @@ public class CPersonnes extends Controller {
 		
 		render("VPersonnes/liste_personnes.html", liste, title);
 	}
-	/*
-	public static void fiche() {
 		
-	}*/
-	
 	public static void fiche(long id) {
 		Personne user = Personne.find("byId", id).first();
 
@@ -35,5 +31,9 @@ public class CPersonnes extends Controller {
 		} else {			
 			render("VPersonnes/fiche_utilisateur.html", user);
 		}
+	}
+	
+	public static void nouvelUtilisateur() {
+		render("VPersonnes/fiche_utilisateur.html");
 	}
 }
