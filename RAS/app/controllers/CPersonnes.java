@@ -7,6 +7,7 @@ import play.*;
 import play.mvc.*;
 import models.*;
 
+@With(Secure.class)
 public class CPersonnes extends Controller {
 	public static void test() {
 		try {

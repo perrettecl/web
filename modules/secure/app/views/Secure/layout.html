@@ -2,7 +2,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
-        <title>Login</title>		
+        <title>Login #{get 'title' /}</title>	
+        <link type="text/css" rel="stylesheet" href="@{'/public/materialize/css/materialize.min.css'}"  media="screen,projection"/>
+		<link type="text/css" rel="stylesheet" href="@{'/public/materialize/css/style.css'}">
+        #{get 'moreStyles' /}
         <meta http-equiv="Content-Type" content="text/html; charset=${_response_encoding}"/>
         <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/secure.css'}" />
     </head>

@@ -67,6 +67,7 @@ public class Personne extends Model {
 
 		//creation du mdp par defaut
 		this.motDePasse = encodeMotDePasse(nom.toUpperCase());
+		System.out.println("je suis la");
 	}
 
 
@@ -80,11 +81,18 @@ public class Personne extends Model {
 
 	public boolean verifMotDePasse(String motDePasse)
 	{
-		return this.motDePasse.equals(encodeMotDePasse(motDePasse.toUpperCase()));
+		if(this.motDePasse == null)
+		{
+			this.motDePasse = encodeMotDePasse(this.nom.toUpperCase());
+			this.save();
+		}
+			
+		String mdp_encode = encodeMotDePasse(motDePasse);
+		return this.motDePasse.equals(mdp_encode);
 	}
 	
 	public void setMotDePasse(String motDePasse) {
-		this.motDePasse = encodeMotDePasse(motDePasse.toUpperCase());
+		this.motDePasse = encodeMotDePasse(motDePasse);
 	}
 
 	public String getNom() {
@@ -175,14 +183,14 @@ public class Personne extends Model {
 		try {
 			MessageDigest md5 = MessageDigest.getInstance("MD5");
 			MessageDigest sha1 = MessageDigest.getInstance("SHA");
-			bytesOfDigeste = sha1.digest(md5.digest((mdp+grain).getBytes("UTF-8")));
+			bytesOfDigeste = sha1.digest(md5.digest((mdp+grain).getBytes()));
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 		
-		return new String(bytesOfDigeste);
+		return bytesToHex(bytesOfDigeste);
 	}
 	
 	public static Personne connect(String email, String mdp)
@@ -215,5 +223,16 @@ public class Personne extends Model {
 		c.save();
 		this.refresh();
 	}
+	
+
+	private static String bytesToHex(byte[] in) {
+		final StringBuilder builder = new StringBuilder();
+		for(byte b : in) {
+			builder.append(String.format("%02x", b));
+		}
+		return builder.toString();
+	}
+
+
 	
 }

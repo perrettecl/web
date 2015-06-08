@@ -1,6 +1,9 @@
 #{extends 'Secure/layout.html' /}
+#{get 'moreStyles' /}
 
 <div id="login">
+<div class="col m12">
+<div class="col center">
 	
 	<h1>&{'secure.title'}</h1>
 		
@@ -25,12 +28,10 @@
 			<label for="password">&{'secure.password'}</label>
 			<input type="password" name="password" id="password" value="" />
 		</p>
-		<p id="remember-field">
-			<input type="checkbox" name="remember" id="remember" value="true" ${flash.remember ? 'checked="true"' : ''} />
-			<label for="remember">&{'secure.remember'}</label>
-		</p>
 		<p id="signin-field">
 			<input type="submit" id="signin" value="&{'secure.signin'}" />
 		</p>
 	#{/form}
+	</div>
+	</div>
 </div>
