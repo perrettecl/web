@@ -14,14 +14,12 @@ import java.util.*;
 @Entity
 public class Zone extends Model {
 	
-	
 	private String nom;
 	private String adresse;
 	private String codePostal;
 	private String ville;
 	private String info;
 	private boolean accesExclusif;
-	private boolean racine = false;
 	
 	@ManyToMany(targetEntity=models.Personne.class)
 	private Set<Personne> responsables;
@@ -169,7 +167,7 @@ public class Zone extends Model {
 		
 		this.refresh();
 	}
-
+	
 	public boolean isRacine() {
 		return racine;
 	}
@@ -188,5 +186,4 @@ public class Zone extends Model {
 	{
 		return Zone.getRacine().getFils();
 	}
-
 }
