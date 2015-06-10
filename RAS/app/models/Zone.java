@@ -21,6 +21,7 @@ public class Zone extends Model {
 	private String ville;
 	private String info;
 	private boolean accesExclusif;
+	private boolean racine = false;
 	
 	@ManyToMany(targetEntity=models.Personne.class)
 	private Set<Personne> responsables;
@@ -168,4 +169,24 @@ public class Zone extends Model {
 		
 		this.refresh();
 	}
+
+	public boolean isRacine() {
+		return racine;
+	}
+
+	public Zone(String nom) {
+		this.nom = nom;
+		this.racine = false;
+	}
+	
+	public static Zone getRacine()
+	{
+		return Zone.find("SELECT z FROM Zone z WHERE z.racine").first();
+	}
+	
+	public static Set<Zone> getPremierNiveau()
+	{
+		return Zone.getRacine().getFils();
+	}
+
 }
