@@ -26,7 +26,7 @@ public class CPersonnes extends Controller {
 		render("VPersonnes/liste_personnes.html", liste, title);
 	}
 	
-	public static void creerUtilisateur(String nom, String prenom, String email, String telephone, String adresse, String codePostal, String ville) {
+	public static void creerUtilisateur(String nom, String prenom, String email, String telephone, String adresse, String codePostal, String ville) throws Exception {
 		validation.required(nom);
 		validation.required(prenom);
 		validation.required(email);
@@ -59,7 +59,7 @@ public class CPersonnes extends Controller {
 	}
 	
 	public static void rechercheUtilisateur(String recherche) {
-		List<Personne> liste = Personne.find("byNom", recherche).fetch();
+		List<Personne> liste = Personne.recherche(recherche);
 
 		renderJSON((Object)liste);
 	}
