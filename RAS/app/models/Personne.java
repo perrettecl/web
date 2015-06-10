@@ -55,7 +55,13 @@ public class Personne extends Model {
 	
 	
 	public Personne(String email, String nom, String prenom, String telephone,
-			String adresse, String codepostal, String ville) {
+			String adresse, String codepostal, String ville) throws Exception {
+		
+		if(Personne.find("byEmail", email).first() != null)
+		{
+			throw new Exception("L'email existe déjà");
+		}
+		
 		this.email = email;
 		this.nom = nom;
 		this.prenom = prenom;
@@ -71,6 +77,13 @@ public class Personne extends Model {
 	}
 
 
+	public static List<Personne> recherche(String chaine) {
+		List<Personne> list = null;
+		Query q = Personne.em().createQuery("SELECT p FROM Personne p WHERE LOWER(p.nom) like LOWER(:arg) or LOWER(p.prenom) like LOWER(:arg)");
+		q.setParameter("arg", chaine+"%");
+		return q.getResultList();
+	}
+	
 	public String getEmail() {
 		return email;
 	}

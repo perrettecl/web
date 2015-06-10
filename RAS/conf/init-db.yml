@@ -1,10 +1,62 @@
- 
- Personne(chantal):
-    email:        chantal.ladessous@coincoin.com
-    nom:          Ladessous
-    prenom:       Chantal
-    telephone:    0606734618
-    adresse:      Les Usages
-    codePostal:   71130
-    ville:        Clessy
-    admin:        false
+--- 
+Personne(chantal): 
+  admin: true
+  adresse: "Les Usages"
+  codePostal: 71130
+  email: chantal.ladessous@coin.com
+  nom: Ladessous
+  prenom: Chantal
+  telephone: 0606734618
+  ville: Clessy
+  
+Personne(george): 
+  admin: false
+  adresse: "Les Usages"
+  codePostal: 71130
+  email: george.lebon@coin.com
+  nom: Lebon
+  prenom: George
+  telephone: 0606734618
+  ville: Clessy
+  
+  
+Personne(marc): 
+  admin: fasle
+  adresse: "Les Usages"
+  codePostal: 71130
+  email: marc.leblanc@coin.com
+  nom: Leblanc
+  prenom: Marc
+  telephone: 0606734618
+  ville: Clessy
+
+
+Carte(carte1): 
+  dateCreation: 04/03/2015
+  dateExpiration: 04/03/2020
+  numero: 5124-5897-4578-1368
+  utilisateur: marc
+  valide: fasle
+  
+  
+Carte(carte2): 
+  dateCreation: 11/05/2015
+  dateExpiration: 11/05/2020
+  numero: 5124-5897-4578-1384
+  utilisateur: marc
+  valide: true
+  
+  
+Carte(carte3): 
+  dateCreation: 21/05/2015
+  dateExpiration: 21/05/2020
+  numero: 5124-5897-4578-8745
+  utilisateur: george
+  valide: true
+  
+Carte(carte4): 
+  dateCreation: 04/02/2010
+  dateExpiration: 04/02/2015
+  numero: 5124-5897-4578-4172
+  utilisateur: george
+  valide: true
