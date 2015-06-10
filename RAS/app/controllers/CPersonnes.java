@@ -92,4 +92,15 @@ public class CPersonnes extends Controller {
 			render("VPersonnes/fiche_utilisateur.html", user);
 		}
 	}
+	
+	public static void invaliderCarte(long id) {
+		Carte c = Carte.find("byId", id).first();
+		
+		if(c == null) {
+			renderJSON("{erreur: true}");
+		} else {
+			c.invaliderCarte();
+			renderJSON("{erreur: false}");
+		}
+	}
 }

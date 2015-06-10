@@ -5,7 +5,9 @@ function init() {
 function effectuerRecherche() {
 	$("li.collection-item").remove();
 	if( $( "#search" ).val() != "") {
+		
 		$.getJSON("/CPersonnes/rechercheUtilisateur?recherche=" + $( "#search" ).val(), function(data) {
+			$("li.collection-item").remove();
 			if(data != "") {
 				$.each(data, function(i, field){
 					$("#liste-utilisateurs").append('<li class="collection-item"><a href="javascript:getInfosUtilisateur(' + field["id"] + ')">' + field["prenom"] + ' ' + field["nom"] + '</a></li>');
@@ -52,5 +54,24 @@ function envoyerFormulaireCreation() {
 						console.log(data);	
 				 	},
 		dataType: 'json'
-	}).done;
+	});
+}
+
+function invaliderCarte(idCarte) {
+	$.ajax({
+		type: "POST",
+		url: "/CPersonnes/invaliderCarte",
+		data: 	{ 
+					'id' : idCarte
+				},
+		success: 	function(data) {
+						$.each(data, function(i, field){
+							if(field['erreur'] == true)
+								alert("erreur");
+							else
+								alert("ok");
+						});	
+				 	},
+		dataType: 'json'
+	});
 }

@@ -75,4 +75,9 @@ public class Carte extends Model {
 		this.save();
 	}
 	
+	public void invaliderCarte(){
+		this.valide = false;
+		this.save();
+	}
+
 }

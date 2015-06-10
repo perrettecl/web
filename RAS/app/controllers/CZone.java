@@ -4,6 +4,8 @@ import models.Personne;
 import models.Zone;
 import play.mvc.*;
 
+import java.util.*;
+
 public class CZone extends Controller {
 
     public static void index() {
@@ -23,4 +25,8 @@ public class CZone extends Controller {
 			render("VZones/fiche_zone.html", zone);
 		}
 	}
+    
+    public static void getZonesAdjacentes(long id) {
+    	Zone zone = Zone.find("byId", id).first();
+    }
 }

@@ -13,7 +13,6 @@ import java.util.*;
 
 @Entity
 public class Zone extends Model {
-	
 	private String nom;
 	private String adresse;
 	private String codePostal;

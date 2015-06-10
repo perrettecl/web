@@ -230,13 +230,6 @@ public class Personne extends Model {
 		
 		this.refresh();
 	}
-	
-	public void invaliderCarte(Carte c){
-		c.setValide(false);
-		c.save();
-		this.refresh();
-	}
-	
 
 	private static String bytesToHex(byte[] in) {
 		final StringBuilder builder = new StringBuilder();
