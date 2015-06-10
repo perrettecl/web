@@ -41,10 +41,12 @@ public class Carte extends Model {
 	}
 
 	public boolean isValide() {
+		
 		if(!valide){
 			return valide;
 		} else {
-			return (new Date().compareTo(dateExpiration) <= 0);
+			Date dateRef = new Date();
+			return (dateRef.compareTo(dateExpiration)) <= 0;
 		}
 	}
 
