@@ -86,3 +86,33 @@
 		</table>
 	#{/else}
 </fieldset>
+<fieldset>
+	<legend>Cartes</legend>
+	#{if user.getCartes().size() == 0}
+        <p><em>Aucune carte à afficher</em></p>
+    #{/if}
+    #{else}
+    	<table class="hoverable responsive-table">
+        	<thead>
+				<tr>
+					<th>Date de création</th>
+					<th>Date d'expiration</th>
+					<th>Validité</th>
+				</tr>
+			</thead>
+			<tbody>
+				#{list items:user.getCartes(), as:'carte'}
+				<tr class="#{if !carte.valide}red#{/if}#{else}green#{/else}">
+					<td>${carte.dateCreation}</td>
+					<td>${carte.dateExpiration}</td>
+					<td>
+					#{if carte.valide}
+				    	<a class="btn-floating waves-effect waves-light red" href="javascript:invaliderCarte(${carte.id})"><i class="tiny mdi-navigation-close" title="Invalider"></i></a>
+				    #{/if}
+				    <td>
+				</tr>
+				#{/list}
+			<tbody>
+		</table>
+	#{/else}
+</fieldset>
