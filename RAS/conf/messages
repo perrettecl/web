@@ -1,3 +1,6 @@
 # You can specialize this file for each language.
 # For example, for French create a messages.fr file
 #
+validation.required = Le champ %s est obligatoire
+validation.email = L'email est incorrect
+validation.match = Le champ %s est incorrect
