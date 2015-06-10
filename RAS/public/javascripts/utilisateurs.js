@@ -35,3 +35,14 @@ function nouvelUtilisateur() {
 	    $("#corps").html(data);
 	  });
 }
+function envoyerFormulaireCreation() {
+	$.ajax({
+		type: "POST",
+		url: "CPersonnes/creerUtilisateur",
+		data: $("nom"),
+		success: 	function(data) {
+						console.log(data);	
+				 	}
+		
+	});
+}

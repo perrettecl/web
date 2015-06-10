@@ -25,8 +25,29 @@ public class CPersonnes extends Controller {
 		render("VPersonnes/liste_personnes.html", liste, title);
 	}
 	
-	public static void creerUtilisateur() {
+	public static void creerUtilisateur(String nom, String prenom, String email, String telephone, String adresse, String codePostal, String ville) {
+		validation.required(nom);
+		validation.required(prenom);
+		validation.required(email);
+		validation.email(email);
+		validation.required(telephone);
+		validation.phone(telephone);
+		validation.required(adresse);
+		validation.required(codePostal);
+		validation.match("code postal", codePostal, "$[0-9]{5}^");
+		validation.required(ville);
 		
+		if(validation.hasErrors()) {
+			List<play.data.validation.Error> erreurs = validation.errors();
+
+			renderJSON((Object)erreurs);
+		} else {
+	    	 Personne nouvelUtilisateur = new Personne(email, nom, prenom, telephone, adresse, codePostal, ville);
+	    	 nouvelUtilisateur.save();
+	    	 
+	    	 String message = "Utilisateur créé";
+	    	 renderJSON((Object)message);
+		}
 	}
 	
 	public static void rechercheUtilisateur(String recherche) {
@@ -35,7 +56,18 @@ public class CPersonnes extends Controller {
 		renderJSON((Object)liste);
 	}
 	
-	public static void utilisateurs(long id) {
+	public static void utilisateurs(String in) {
+		long id;
+		
+		if(in == null){
+			Personne p = Personne.find("byEmail", Security.connected()).first();
+
+			id = p.id;
+			
+			System.out.println(id);
+		} else {
+			id = Long.parseLong(in);
+		}
 		render("VPersonnes/utilisateurs.html", id);
 	}
 	
