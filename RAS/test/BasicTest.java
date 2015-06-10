@@ -39,7 +39,7 @@ public class BasicTest extends UnitTest {
 	    assertEquals(true, perrettecl.verifMotDePasse("PERRETTE"));
 	}
 	
-	@Test
+	/*@Test
 	public void verifCreationCarte() throws Exception {
 	    // Create a new user and save it
 	    new Personne("perrette.c@gmail.com","Perrette", "Clément", null).save();
@@ -74,8 +74,22 @@ public class BasicTest extends UnitTest {
 	    
 	    
 	    
-	}
+	}*/
 	
+	@Test
+	public void recherchePersonne() throws Exception {
+	    // Create a new user and save it
+	    new Personne("perrette.c@gmail.com","Perrette", "Clément", null).save();
+	    
+	    // Retrieve the user with e-mail address perrette.c@gmail.com
+	    List<Personne> list = Personne.recherche("clém");
+	    assertNotEquals(0, list.size());
+	   
+	    Personne perrettecl = Personne.find("byEmail", "perrette.c@gmail.com").first();
+	    perrettecl.delete();
+	    
+	    
+	}
 	
 	/*@Test
 	public void sequenceCreation() throws Exception {
