@@ -20,6 +20,7 @@ public class Zone extends Model {
 	private String ville;
 	private String info;
 	private boolean accesExclusif;
+	private boolean racine;
 	
 	@ManyToMany(targetEntity=models.Personne.class)
 	private Set<Personne> responsables;
