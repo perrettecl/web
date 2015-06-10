@@ -1,6 +1,7 @@
 package controllers;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import play.*;
@@ -39,8 +40,15 @@ public class CPersonnes extends Controller {
 		
 		if(validation.hasErrors()) {
 			List<play.data.validation.Error> erreurs = validation.errors();
-
-			renderJSON((Object)erreurs);
+			
+			ArrayList<String> erreursAL = new ArrayList<String>();
+			
+			for(play.data.validation.Error error : erreurs) {
+				erreursAL.add(error.toString());
+				System.out.println(error);
+			}
+			
+			renderJSON(erreurs.toString());
 		} else {
 	    	 Personne nouvelUtilisateur = new Personne(email, nom, prenom, telephone, adresse, codePostal, ville);
 	    	 nouvelUtilisateur.save();

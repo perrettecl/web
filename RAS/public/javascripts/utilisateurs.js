@@ -38,11 +38,19 @@ function nouvelUtilisateur() {
 function envoyerFormulaireCreation() {
 	$.ajax({
 		type: "POST",
-		url: "CPersonnes/creerUtilisateur",
-		data: $("nom"),
+		url: "/CPersonnes/creerUtilisateur",
+		data: 	{ 
+					'nom' : $("#nom").val(),
+					'prenom' : $("#prenom").val(),
+					'email' : $("#email").val(),
+					'telephone' : $("#telephone").val(),
+					'adresse' : $("#adresse").val(),
+					'codePostal' : $("#code-postal").val(),
+					'ville' : $("#ville").val()
+				},
 		success: 	function(data) {
 						console.log(data);	
-				 	}
-		
-	});
+				 	},
+		dataType: 'json'
+	}).done;
 }
