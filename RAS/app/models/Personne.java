@@ -81,7 +81,17 @@ public class Personne extends Model {
 		List<Personne> list = null;
 		Query q = Personne.em().createQuery("SELECT p FROM Personne p WHERE LOWER(p.nom) like LOWER(:arg) or LOWER(p.prenom) like LOWER(:arg)");
 		q.setParameter("arg", chaine+"%");
-		return q.getResultList();
+		list = q.getResultList();
+		
+		for(Personne p : list)
+		{
+			p.cartes=null;
+			p.zonesAutorise=null;
+			p.zonesResponsable=null;
+			p.motDePasse=null;
+		}
+		
+		return list;
 	}
 	
 	public String getEmail() {
@@ -142,12 +152,12 @@ public class Personne extends Model {
 	}
 
 
-	public String getCodepostal() {
+	public String getCodePostal() {
 		return codePostal;
 	}
 
 
-	public void setCodepostal(String codepostal) {
+	public void setCodePostal(String codepostal) {
 		this.codePostal = codepostal;
 	}
 

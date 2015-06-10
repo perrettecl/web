@@ -60,7 +60,6 @@ public class CPersonnes extends Controller {
 	
 	public static void rechercheUtilisateur(String recherche) {
 		List<Personne> liste = Personne.recherche(recherche);
-
 		renderJSON((Object)liste);
 	}
 	
