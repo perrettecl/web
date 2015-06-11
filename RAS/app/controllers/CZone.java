@@ -39,8 +39,7 @@ public class CZone extends Controller {
 			render("VZones/zone_introuvable.html");
 		} else {
 			boolean isAdmin = current_user.isAdmin();
-		//	boolean isResponsable = zone.verifResponsable(current_user);
-			boolean isResponsable = true;
+			boolean isResponsable = zone.verifResponsable(current_user);
 			render("VZones/fiche_zone.html", zone, isAdmin, isResponsable);
 		}
 	}
@@ -62,10 +61,16 @@ public class CZone extends Controller {
     		Zone zoneParente = Zone.findById(idPere);
     		
     		if(zoneParente != null) {
-	    		if(nom != "") {
+	    		if(!nom.equals("")) {
 	    			Zone zone = new Zone(nom);
-	    			zone.save();
 	    			
+	    			zone.getPeres().add(zoneParente);
+	    			zoneParente.getFils().add(zone);
+	    			
+	    			zone.save();
+	    			zoneParente.save();
+
+	    			System.out.println(zone);
 	    			renderJSON("{\"erreur\" : \"false\"}");
 	    		} else {
 	    			renderJSON("{\"erreur\" : \"true\", \"message\" : \"Le nom de la zone ne peut pas être vide\"}");
@@ -81,7 +86,7 @@ public class CZone extends Controller {
     		Zone zone = Zone.findById(id);
     		
     		if(zone != null) {
-	    		if(newNom != "") {
+	    		if(!newNom.equals("")) {
 	    			zone.setNom(newNom);
 	    			zone.save();
 
@@ -102,8 +107,7 @@ public class CZone extends Controller {
     		Personne user = Personne.findById(idPersonne);
     		
     		if(user != null) {
-    			//if(zone.verifResponsable(current_user)) {
-    			if(true) {
+    			if(zone.verifResponsable(current_user)) {
     				zone.addPersonneAutorise(user);
     			} else {
     				renderJSON("{\"erreur\" : \"true\", \"message\" : \"L'utilisateur n'est pas responsable de la zone\"}");
@@ -123,8 +127,7 @@ public class CZone extends Controller {
     		Personne user = Personne.findById(idPersonne);
     		
     		if(user != null) {
-    			//if(zone.verifResponsable(current_user)) {
-    			if(true) {
+    			if(zone.verifResponsable(current_user)) {
     				zone.removePersonneAutorise(user);
     			} else {
     				renderJSON("{\"erreur\" : \"true\", \"message\" : \"Vous n'êtes pas responsable de la zone\"}");

@@ -123,13 +123,13 @@
 	<form class="col s12">
 		<div class="row">
 			<div class="input-field col s12 m6 l6">
-				<i class="mdi-action-assignment-ind prefix"></i>
-				<select class="validate" id="idZoneTo" name="idZoneTo">
+
+				<select id="selectIdZoneTo" name="selectIdZoneTo">
+					<option value="" disabled>Vers la zone</option>
 				#{list zone.getFils(), as:'zoneFils'}
 					<option value="${zoneFils.id}">${zoneFils.nom}</option>
 				#{/list}
 				</select>
-				<label for="idZoneTo">Vers la zone</label>
 			</div>
 			<div class="input-field col s12 m4 l6">
 				<a class="waves-effect waves-light btn green">Ajouter</a>
