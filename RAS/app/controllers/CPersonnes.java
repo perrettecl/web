@@ -2,10 +2,16 @@ package controllers;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+
+
+
+
+import org.joda.time.DateTime;
 
 import com.google.gson.JsonElement;
 
@@ -43,16 +49,27 @@ public class CPersonnes extends Controller {
 		render("VPersonnes/liste_personnes.html", liste, title);
 	}
 	
-	public static void creerUtilisateur(String nom, String prenom, String email, String telephone, String adresse, String codePostal, String ville) throws Exception {
+	public static void resetMotDePasse(long id) {
+		Personne user = Personne.findById(id);
+		
+		if(user != null) {
+			user.resetMotDePasse();
+			user.save();
+			
+			renderJSON("{\"erreur\" : \"false\"}");
+		} else {
+			renderJSON("{\"erreur\" : \"true\"}");
+		}
+	}
+	
+	public static void modifierUtilisateur(long id, String nom, String prenom, String telephone, String adresse, String codePostal, String ville) throws Exception {
 		validation.required(nom);
-		validation.required(prenom);
-		validation.required(email);
-		validation.email(email);
-		validation.required(telephone);
-		validation.phone(telephone);
+		validation.required("prénom", prenom);
+		validation.required("téléphone", telephone);
+		validation.phone("téléphone", telephone);
 		validation.required(adresse);
-		validation.required(codePostal);
-		validation.match("code postal", codePostal, "$[0-9]{5}^");
+		validation.required("code postal", codePostal);
+		validation.match("code postal", codePostal, "^[0-9]{5}$");
 		validation.required(ville);
 		
 		if(validation.hasErrors()) {
@@ -60,7 +77,7 @@ public class CPersonnes extends Controller {
 			Map<String,String> messages_erreurs = new HashMap<String, String>();
 			
 			for(play.data.validation.Error error : validation.errors()) {
-				messages_erreurs.put(error.getKey(),error.message());
+				messages_erreurs.put(error.getKey(), error.message());
 			}
 			
 			renderJSON(messages_erreurs);
@@ -69,14 +86,95 @@ public class CPersonnes extends Controller {
 			Map<String,String> messages_erreurs = new HashMap<String, String>();
 
 			messages_erreurs.put("codePostal","La ville et le code postal ne corresponde pas");
-
+			
+			renderJSON(messages_erreurs);
+		} else {
+	    	 Personne user = Personne.findById(id);
+	    	 
+	    	 user.setNom(nom);
+	    	 user.setPrenom(prenom);
+	    	 user.setTelephone(telephone);
+	    	 user.setAdresse(adresse);
+	    	 user.setCodePostal(codePostal);
+	    	 user.setVille(ville);
+	    	 
+	    	 user.save();
+	    	 
+	    	 renderJSON("{\"erreur\" : \"false\"}");
+		}
+	}
+	
+	public static void creerUtilisateur(String nom, String prenom, String email, String telephone, String adresse, String codePostal, String ville) throws Exception {
+		validation.required(nom);
+		validation.required("prénom", prenom);
+		validation.required(email);
+		validation.email(email);
+		
+		if(Personne.find("byEmail", email).first() != null) {
+			validation.addError("email", "L'adresse email existe déja");
+	    }
+		
+		validation.required("téléphone", telephone);
+		validation.phone("téléphone", telephone);
+		validation.required(adresse);
+		validation.required("code postal", codePostal);
+		validation.match("code postal", codePostal, "^[0-9]{5}$");
+		validation.required(ville);
+		
+		if(validation.hasErrors()) {
+			Map<String,String> messages_erreurs = new HashMap<String,String>();
+			
+			for(play.data.validation.Error error : validation.errors()) {
+				messages_erreurs.put(error.getKey(), error.message());
+			}
+			
+			messages_erreurs.put("erreur", "true");
+			
 			renderJSON(messages_erreurs);
 		} else {
 	    	 Personne nouvelUtilisateur = new Personne(email, nom, prenom, telephone, adresse, codePostal, ville);
 	    	 nouvelUtilisateur.save();
 	    	 
-	    	 String message = "Utilisateur créé";
-	    	 renderJSON((Object)message);
+	    	 renderJSON("{\"erreur\" : \"false\", \"id\" : \"" + nouvelUtilisateur.id + "\"}");
+		}
+	}
+	
+	public static void ajouterCarte(long id, String numeroCarte) {
+		Personne user = Personne.findById(id);
+		
+		if(user != null) {
+			
+			if(Carte.find("byNumero", numeroCarte).first() != "null") {
+				DateTime dateJour = new DateTime();
+				DateTime dateFin = dateJour.plusYears(2);
+				
+				Carte carte = new Carte(numeroCarte, dateJour.toDate(), dateFin.toDate());
+
+				user.addCarte(carte);
+				
+				user.save();
+				
+				renderJSON("{\"erreur\" : \"false\"}");
+			} else {
+				renderJSON("{\"erreur\" : \"true\"}, \"message\" : \"Ce numéro de carte existe déjà\"");
+			}
+		} else {
+			renderJSON("{\"erreur\" : \"true\"}, \"message\" : \"Utilisateur introuvable\"");
+		}
+	}
+	
+	public static void modifierMotDePasse(long id, String newMdp, String newMdpConf) {
+		Personne user = Personne.findById(id);
+		
+		if(user != null) {
+			if(newMdp == newMdpConf) {
+				user.setMotDePasse(newMdp);
+				user.save();
+			} else {
+				renderJSON("{\"erreur\" : \"true\"}, \"message\" : \"Le mot de passe et sa confirmation sont différents\"");
+			}
+		} else {
+			renderJSON("{\"erreur\" : \"true\"}, \"message\" : \"Utilisateur introuvable\"");
 		}
 	}
 	
@@ -106,6 +204,10 @@ public class CPersonnes extends Controller {
 	public static void getInfosUtilisateur(long id) {
 		Personne user = Personne.find("byId", id).first();
 
+		for(Carte carte : user.getCartes()) {
+			System.out.println(carte.getNumero() + carte.getDateCreation());
+		}
+		
 		if(user == null) {
 			render("VPersonnes/utilisateur_introuvable.html");
 		} else {			
