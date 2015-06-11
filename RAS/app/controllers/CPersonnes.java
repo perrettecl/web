@@ -10,7 +10,11 @@ import java.util.Map;
 
 import org.joda.time.DateTime;
 
+import com.google.gson.JsonElement;
+
 import play.*;
+import play.libs.WS;
+import play.libs.WS.HttpResponse;
 import play.mvc.*;
 import play.test.Fixtures;
 import models.*;
@@ -61,6 +65,12 @@ public class CPersonnes extends Controller {
 				messages_erreurs.put("erreur", "true");
 				
 				renderJSON(messages_erreurs);
+			}else if(!valideVilleCP(ville,codePostal)){
+				Map<String,String> messages_erreurs = new HashMap<String, String>();
+
+				messages_erreurs.put("codePostal","La ville et le code postal ne corresponde pas");
+				
+				renderJSON(messages_erreurs);
 			} else {
 		    	 Personne user = Personne.findById(id);
 		    	 
@@ -106,7 +116,13 @@ public class CPersonnes extends Controller {
 				messages_erreurs.put("erreur", "true");
 				
 				renderJSON(messages_erreurs);
-			} else {
+			} else if(!valideVilleCP(ville,codePostal)){
+				Map<String,String> messages_erreurs = new HashMap<String, String>();
+
+				messages_erreurs.put("codePostal","La ville et le code postal ne corresponde pas");
+				
+				renderJSON(messages_erreurs);
+			}else {
 		    	 Personne nouvelUtilisateur = new Personne(email, nom, prenom, telephone, adresse, codePostal, ville);
 		    	 nouvelUtilisateur.save();
 		    	 
@@ -214,5 +230,19 @@ public class CPersonnes extends Controller {
 				renderJSON("{\"erreur\": \"false\"}");
 			}
 		}
+	}
+	
+	private static boolean valideVilleCP(String ville, String cp)
+	{
+		HttpResponse res = WS.url("http://www.cp-ville.com/cpcom.php?cpcommune="+ville).get();
+		int statut = res.getStatus();
+		
+		if(statut == 200){
+			System.out.println(""+statut);
+			String json = res.getString().split("\n")[1];
+			return json.matches(".*"+cp+".*");
+		}
+		
+		return true;
 	}
 }
