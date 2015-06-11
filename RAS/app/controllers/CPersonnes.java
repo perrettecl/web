@@ -7,7 +7,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.JsonElement;
+
 import play.*;
+import play.libs.WS;
+import play.libs.WS.HttpResponse;
 import play.mvc.*;
 import play.test.Fixtures;
 import models.*;
@@ -52,17 +56,19 @@ public class CPersonnes extends Controller {
 		validation.required(ville);
 		
 		if(validation.hasErrors()) {
-			;
-			
-			Map<String, HashSet<String>> messages_erreurs = new HashMap<String, HashSet<String>>();
+
+			Map<String,String> messages_erreurs = new HashMap<String, String>();
 			
 			for(play.data.validation.Error error : validation.errors()) {
-				if(messages_erreurs.get(error.getKey()) == null){
-					messages_erreurs.put(error.getKey(), new HashSet<String>());
-				}
-				messages_erreurs.get(error.getKey()).add(error.message());
+				messages_erreurs.put(error.getKey(),error.message());
 			}
+			
+			renderJSON(messages_erreurs);
+		}
+		else if(!valideVilleCP(ville,codePostal)){
+			Map<String,String> messages_erreurs = new HashMap<String, String>();
 
+			messages_erreurs.put("codePostal","La ville et le code postal ne corresponde pas");
 
 			renderJSON(messages_erreurs);
 		} else {
@@ -116,5 +122,13 @@ public class CPersonnes extends Controller {
 			c.invaliderCarte();
 			renderJSON("{\"erreur\": \"false\"}");
 		}
+	}
+	
+	private static boolean valideVilleCP(String ville, String cp)
+	{
+		HttpResponse res = WS.url("http://www.cp-ville.com/cpcom.php?cpcommune="+ville).get();
+		JsonElement json = res.getJson();
+		System.out.println(json.toString());
+		return true;
 	}
 }
