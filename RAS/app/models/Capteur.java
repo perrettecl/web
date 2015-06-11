@@ -20,12 +20,9 @@ public class Capteur extends Model {
 	@ManyToOne
 	private Zone acces;
 
-	private String info;
-
-	public Capteur(Zone position, Zone acces, String info) {
+	public Capteur(Zone position, Zone acces) {
 		this.position = position;
 		this.acces = acces;
-		this.info = info;
 		
 		this.save();
 		
@@ -55,19 +52,6 @@ public class Capteur extends Model {
 	public void setAcces(Zone acces) {
 		this.acces = acces;
 		this.save();
-	}
-
-	public String getInfo() {
-		return info;
-	}
-
-	public void setInfo(String info) {
-		this.info = info;
-		this.save();
-	}
-
-
-	
-	
+	}	
 	
 }

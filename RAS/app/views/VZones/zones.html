@@ -2,27 +2,19 @@
 #{set title:'Zones' /}
 
 <div class="row">
-		<section>
-			<div class="collection with-header col s12 m12 l2 z-depth-1 menu-gauche" id="liste-zones">
-				<h4>Zone 1 <a class="btn-floating waves-effect waves-light green right" href="javascript:creerZone(1)"><i class="mdi-content-add" title="Créer une zone"></i></a></h4>
-				<a href="#!" class="collection-item">Retour</a>
-				<a href="#!" class="collection-item">Zone 1.1</a>
-				<a href="#!" class="collection-item">Zone 1.2</a>
-				<a href="#!" class="collection-item">Zone 1.3</a>
-				<a href="#!" class="collection-item">Zone 1.4</a>
-				<a href="#!" class="collection-item">Zone 1.5</a>
-			</div>
-		</section>
-		
-		<section class="corps col s12 m12 l10" id="corps">
-		</section>
-	</div>
+	<section id="navigation-zone">
+	</section>
 	
-	<!-- jQuery is required by Materialize to function -->
-	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-	<script type="text/javascript" src="@{'/public/materialize/js/materialize.min.js'}"></script>
-	<script type="text/javascript" src="@{'/public/javascripts/zones.js'}"></script>
-	<script type="text/javascript">
-	//custom JS code
-		$(window).bind("load",init);
-	</script>
+	<section class="corps col s12 m12 l10" id="corps">
+	</section>
+</div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script type="text/javascript" src="@{'/public/materialize/js/materialize.min.js'}"></script>
+<script type="text/javascript" src="@{'/public/javascripts/zones.js'}"></script>
+<script type="text/javascript">
+//custom JS code
+	afficherZone(${id});
+</script>
