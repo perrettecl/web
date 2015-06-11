@@ -210,6 +210,13 @@ public class Zone extends Model {
 		this.racine = false;
 	}
 	
+	public Zone(String nom, Zone pere) {
+		this.nom = nom;
+		this.racine = false;
+		this.peres.add(pere);
+		pere.fils.add(this);
+	}
+	
 	public static Zone getRacine()
 	{
 		return Zone.find("SELECT z FROM Zone z WHERE z.racine=true").first();
