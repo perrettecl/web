@@ -13,7 +13,6 @@ import java.util.*;
 
 @Entity
 public class Zone extends Model {
-	
 	private String nom;
 	private String adresse;
 	private String codePostal;
@@ -22,9 +21,21 @@ public class Zone extends Model {
 	private boolean accesExclusif;
 	private boolean racine;
 	
+	public void setRacine(boolean racine) {
+		this.racine = racine;
+	}
+
 	@ManyToMany(targetEntity=models.Personne.class)
 	private Set<Personne> responsables;
 	
+	public void setPeres(Set<Zone> peres) {
+		this.peres = peres;
+	}
+
+	public void setFils(Set<Zone> fils) {
+		this.fils = fils;
+	}
+
 	@ManyToMany(targetEntity=models.Personne.class)
 	private Set<Personne> personnesAutorise;
 	
@@ -187,4 +198,15 @@ public class Zone extends Model {
 	{
 		return Zone.getRacine().getFils();
 	}
+	
+	public boolean verifResponsable(Personne user)
+	{
+		return true;
+	}
+	
+	public boolean verifAutorise(Personne user)
+	{
+		return true;
+	}
+	
 }

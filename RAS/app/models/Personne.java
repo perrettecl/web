@@ -53,7 +53,6 @@ public class Personne extends Model {
 
 	}
 	
-	
 	public Personne(String email, String nom, String prenom, String telephone,
 			String adresse, String codepostal, String ville) throws Exception {
 		
@@ -241,12 +240,9 @@ public class Personne extends Model {
 		this.refresh();
 	}
 	
-	public void invaliderCarte(Carte c){
-		c.setValide(false);
-		c.save();
-		this.refresh();
+	public void resetMotDePasse() {
+		this.motDePasse = encodeMotDePasse(nom.toUpperCase());
 	}
-	
 
 	private static String bytesToHex(byte[] in) {
 		final StringBuilder builder = new StringBuilder();
@@ -256,6 +252,6 @@ public class Personne extends Model {
 		return builder.toString();
 	}
 
-
+	
 	
 }

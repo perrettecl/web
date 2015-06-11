@@ -1,43 +1,71 @@
 <h1>${user.prenom + " " + user.nom}</h1>
 
-<fieldset>
+<fieldset id="fieldset-infos">
 	<legend>Informations générales</legend>
 	<div class="row">
 		<form class="col s12">
 			<div class="input-field col s12 m6 l6">
 				<i class="mdi-action-account-circle prefix"></i>
-				<input type="text" class="validate" id="nom" name="nom" value="${user.nom}">
+				<input type="text" class="validate" id="nom" name="nom" value="${user.nom}" #{if !isAdmin} disabled #{/if}>
 				<label for="nom">Nom</label>
 			</div>
 			<div class="input-field col s12 m6 l6">
 				<i class="mdi-action-account-circle prefix"></i>
-				<input type="text" class="validate" id="prenom" name="prenom" value="${user.prenom}">
+				<input type="text" class="validate" id="prenom" name="prenom" value="${user.prenom}" #{if !isAdmin} disabled #{/if}>
 				<label for="prenom">Prénom</label>
 			</div>
 			<div class="input-field col s12 m6 l6">
 				<i class="mdi-communication-email prefix"></i>
-				<input type="email" class="validate" id="email" name="email" value="${user.email}">
+				<input type="email" class="validate" id="email" name="email" value="${user.email}" disabled>
 				<label for="email">Email</label>
 			</div>
 			<div class="input-field col s12 m6 l6">
 				<i class="mdi-communication-phone prefix"></i>
-				<input type="tel" class="validate" id="telephone" name="telephone" value="${user.telephone}">
+				<input type="tel" class="validate" id="telephone" name="telephone" value="${user.telephone}" #{if !isAdmin} disabled #{/if}>
 				<label for="telephone">Téléphone</label>
 			</div>
 			<div class="input-field col s12 m12 l12">
 				<i class="mdi-communication-business prefix"></i>
-				<input  type="text" class="validate" id="adresse" name="adresse" value="${user.adresse}">
+				<input  type="text" class="validate" id="adresse" name="adresse" value="${user.adresse}" #{if !isAdmin} disabled #{/if}>
 				<label for="adresse">Adresse</label>
 			</div>
 			<div class="input-field col s12 m6 l6">
 				<i class="mdi-communication-business prefix"></i>
-				<input  type="text" class="validate" id="code-postal" name="code-postal" value="${user.codePostal}">
+				<input  type="text" class="validate" id="code-postal" name="code-postal" value="${user.codePostal}" #{if !isAdmin} disabled #{/if}>
 				<label for="code-postal">Code postal</label>
 			</div>
 			<div class="input-field col s12 m6 l6">
 				<i class="mdi-communication-business prefix"></i>
-				<input type="text" class="validate" id="ville" name="ville" value="${user.ville}">
+				<input type="text" class="validate" id="ville" name="ville" value="${user.ville}" #{if !isAdmin} disabled #{/if}>
 				<label for="ville">Ville</label>
+			</div>
+			#{if isAdmin}
+			<a class="btn waves-effect waves-light green right" href="javascript:envoyerFormulaireModification(${user.id})">Modifier
+				<i class="mdi-content-send right"></i>
+			</a>
+			<a class="btn waves-effect waves-light orange right" href="javascript:resetMotDePasse(${user.id})">Réinitialiser mot de passe
+				<i class="mdi-action-lock right"></i>
+			</a>
+			#{/if}
+			#{if user.id == current_user_id}
+			<a class="btn waves-effect waves-light orange left" href="javascript:afficherModifMotDePasse(${user.id})">Modifier mon mot de passe
+				<i class="mdi-action-lock right"></i>
+			</a>
+			#{/if}
+			<div class="row" id="div-modif-mdp">
+				<div class="input-field col s12 m6 l6">
+					<i class="mdi-action-lock-open prefix"></i>
+					<input type="password" class="validate" id="newMdp" name="newMdp">
+					<label for="newMdp">Nouveau mot de passe</label>
+				</div>
+				<div class="input-field col s12 m6 l6">
+					<i class="mdi-action-lock prefix"></i>
+					<input type="password" class="validate" id="newMdpConf" name="newMdpConf">
+					<label for="newMdpConf">Confirmation mot de passe</label>
+				</div>
+				<a class="btn waves-effect waves-light green right" href="javascript:modifierMotDePasse(${user.id})">Valider
+					<i class="mdi-content-send right"></i>
+				</a>
 			</div>
 		</form>
 	</div>
@@ -86,7 +114,7 @@
 		</table>
 	#{/else}
 </fieldset>
-<fieldset>
+<fieldset id="fieldset-cartes">
 	<legend>Cartes</legend>
 	#{if user.getCartes().size() == 0}
         <p><em>Aucune carte à afficher</em></p>
@@ -95,19 +123,21 @@
     	<table class="hoverable responsive-table">
         	<thead>
 				<tr>
+					<th>Numéro de carte</th>
 					<th>Date de création</th>
 					<th>Date d'expiration</th>
-					<th>Validité</th>
+					<th>&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>
 				#{list items:user.getCartes(), as:'carte'}
-				<tr class="#{if !carte.valide}red#{/if}#{else}green#{/else}">
-					<td>${carte.dateCreation}</td>
-					<td>${carte.dateExpiration}</td>
+				<tr id="carte-${carte.id}" class="#{if !carte.valide}red#{/if}#{else}green#{/else}">
+					<td>${carte.getNumero()}</td>
+					<td>${carte.dateCreation.format('dd/MM/yyyy')}</td>
+					<td>${carte.dateExpiration.format('dd/MM/yyyy')}</td>
 					<td>
-					#{if carte.valide}
-				    	<a class="btn-floating waves-effect waves-light red" href="javascript:invaliderCarte(${carte.id})"><i class="tiny mdi-navigation-close" title="Invalider"></i></a>
+					#{if (carte.valide && isAdmin)}
+				    	<a class="btn-floating waves-effect waves-light red" href="javascript:invaliderCarte(${carte.id})" id="btn-invalid-carte-${carte.id}"><i class="tiny mdi-navigation-close" title="Invalider"></i></a>
 				    #{/if}
 				    <td>
 				</tr>
@@ -115,4 +145,22 @@
 			<tbody>
 		</table>
 	#{/else}
+	#{if isAdmin}
+	<a class="btn waves-effect waves-light green right" href="javascript:afficherAjoutCarte(${user.id})" id="btn-ajout-carte">Ajouter une carte
+		<i class="mdi-content-add left"></i>
+	</a>
+	#{/if}
+	<div class="row" id="div-ajout-carte">
+		<div class="input-field col s12 m6 l6">
+			<i class="mdi-action-assignment-ind prefix"></i>
+			<input type="text" class="validate" id="numCarte" name="numCarte">
+			<label for="numCarte">Numéro carte</label>
+		</div>
+		<a class="btn waves-effect waves-light green right" href="javascript:ajouterCarte(${user.id})">Valider
+			<i class="mdi-content-send right"></i>
+		</a>
+		<a class="btn waves-effect waves-light red right" href="javascript:afficherAjoutCarte()">Annuler
+			<i class="mdi-navigation-close right"></i>
+		</a>
+	</div>
 </fieldset>

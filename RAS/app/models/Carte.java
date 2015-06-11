@@ -41,12 +41,10 @@ public class Carte extends Model {
 	}
 
 	public boolean isValide() {
-		
 		if(!valide){
 			return valide;
 		} else {
-			Date dateRef = new Date();
-			return (dateRef.compareTo(dateExpiration)) <= 0;
+			return (new Date().compareTo(dateExpiration) <= 0);
 		}
 	}
 
@@ -73,8 +71,26 @@ public class Carte extends Model {
 		this.numero = numero;
 		this.dateCreation = dateCreation;
 		this.dateExpiration = dateExpiration;
+		this.valide = true;
 		
 		this.save();
 	}
 	
+	public void invaliderCarte(){
+		this.valide = false;
+		this.save();
+	}
+	
+	public void setNumero(String numero)
+	{
+		this.numero = numero;
+	}
+	
+	public static boolean existe(String numero) {
+		Query q = Carte.em().createQuery("SELECT c FROM Carte c WHERE c.numero=:arg");
+		q.setParameter("arg", numero);
+
+		return !q.getResultList().isEmpty();
+	}
+
 }
