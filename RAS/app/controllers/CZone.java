@@ -196,12 +196,21 @@ public class CZone extends Controller {
     public static void rechercheNonResponsable(long idZone, String term) {
     	Zone zone = Zone.findById(idZone);
     	
-    	
+    	if(zone == null){
+    		renderJSON("{\"erreur\" : \"true\", \"message\" : \"Zones introuvables\"}");
+    	}
+    	List<Personne> non_responsables = zone.listePersonneNonResponsable(term);
+    	renderJSON(non_responsables);
     }
     
     public static void rechercheNonAutorise(long idZone, String term) {
     	Zone zone = Zone.findById(idZone);
     	
+    	if(zone == null){
+    		renderJSON("{\"erreur\" : \"true\", \"message\" : \"Zones introuvables\"}");
+    	}
     	
+    	List<Personne> non_autorise = zone.listePersonneNonAutorise(term);
+    	renderJSON(non_autorise);
     }
 }
