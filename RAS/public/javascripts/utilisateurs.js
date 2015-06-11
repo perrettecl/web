@@ -65,6 +65,7 @@ function invaliderCarte(idCarte) {
 					'id' : idCarte
 				},
 		success: 	function(data) {
+						//vérifier que la carte a bien été invalidée (retour JSON)
 						$("#carte-" + idCarte).removeClass("green");
 						$("#carte-" + idCarte).addClass("red");
 						$("#btn-invalid-carte-" + idCarte).remove();
