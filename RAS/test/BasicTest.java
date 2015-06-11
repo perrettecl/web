@@ -10,6 +10,12 @@ import play.test.*;
 import models.*;
 
 public class BasicTest extends UnitTest {
+	
+	@Before
+	public void setUp() {
+	    Fixtures.deleteAll();
+	    Fixtures.loadModels("init-db.yml");
+	}
 
 	@Test
 	public void creationPersonne() throws Exception {
@@ -78,16 +84,9 @@ public class BasicTest extends UnitTest {
 	
 	@Test
 	public void recherchePersonne() throws Exception {
-	    // Create a new user and save it
-	    new Personne("perrette.c@gmail.com","Perrette", "Clément", null).save();
-	    
-	    // Retrieve the user with e-mail address perrette.c@gmail.com
-	    List<Personne> list = Personne.recherche("clém");
+
+	    List<Personne> list = Personne.recherche("l");
 	    assertNotEquals(0, list.size());
-	   
-	    Personne perrettecl = Personne.find("byEmail", "perrette.c@gmail.com").first();
-	    perrettecl.delete();
-	    
 	    
 	}
 	
