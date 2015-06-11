@@ -95,19 +95,21 @@
     	<table class="hoverable responsive-table">
         	<thead>
 				<tr>
+					<th>Numéro de carte</th>
 					<th>Date de création</th>
 					<th>Date d'expiration</th>
-					<th>Validité</th>
+					<th>&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>
 				#{list items:user.getCartes(), as:'carte'}
-				<tr class="#{if !carte.valide}red#{/if}#{else}green#{/else}">
-					<td>${carte.dateCreation}</td>
-					<td>${carte.dateExpiration}</td>
+				<tr id="carte-${carte.id}" class="#{if !carte.valide}red#{/if}#{else}green#{/else}">
+					<td>${carte.numero}</td>
+					<td>${carte.dateCreation.format('dd/MM/yyyy')}</td>
+					<td>${carte.dateExpiration.format('dd/MM/yyyy')}</td>
 					<td>
 					#{if carte.valide}
-				    	<a class="btn-floating waves-effect waves-light red" href="javascript:invaliderCarte(${carte.id})"><i class="tiny mdi-navigation-close" title="Invalider"></i></a>
+				    	<a class="btn-floating waves-effect waves-light red" href="javascript:invaliderCarte(${carte.id})" id="btn-invalid-carte-${carte.id}"><i class="tiny mdi-navigation-close" title="Invalider"></i></a>
 				    #{/if}
 				    <td>
 				</tr>

@@ -65,13 +65,11 @@ function invaliderCarte(idCarte) {
 					'id' : idCarte
 				},
 		success: 	function(data) {
-						$.each(data, function(i, field){
-							if(field['erreur'] == true)
-								alert("erreur");
-							else
-								alert("ok");
-						});	
+						$("#carte-" + idCarte).removeClass("green");
+						$("#carte-" + idCarte).addClass("red");
+						$("#btn-invalid-carte-" + idCarte).remove();
 				 	},
-		dataType: 'json'
+		dataType: 'JSON',
+		async: false
 	});
 }
