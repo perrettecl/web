@@ -198,4 +198,15 @@ public class Zone extends Model {
 	{
 		return Zone.getRacine().getFils();
 	}
+	
+	public boolean verifResponsable(Personne user)
+	{
+		return true;
+	}
+	
+	public boolean verifAutorise(Personne user)
+	{
+		return true;
+	}
+	
 }
