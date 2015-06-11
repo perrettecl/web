@@ -83,12 +83,11 @@ Zone(Ext):
   racine: true
   fils:
     - Zone1
-  
   racine: true
   
 Zone(Zone1):
   nom: "Zone1"
-  racine: true
+  racine: fasle
   peres:
     - Ext
   responsables:
