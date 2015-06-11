@@ -1,97 +1,99 @@
-<h1 id="titreZone"><span id="spanNomZone">${zone.nom}</span> #{if isAdmin}<a class="btn-floating waves-effect waves-light grey" href="javascript:modifierNomZone(${zone.id})"><i class="tiny mdi-image-edit"></i></a>{/if}</h1>
+<h1 id="titreZone"><span id="spanNomZone">${zone.nom}</span> #{if isAdmin && !zone.isRacine()}<a class="btn-floating waves-effect waves-light grey" href="javascript:modifierNomZone(${zone.id})"><i class="tiny mdi-image-edit"></i></a>#{/if}</h1>
 
-<fieldset>
-	<legend>Responsables</legend>
-	#{if zone.getResponsables().size() == 0}
-        <p><em>Aucun responsable à afficher</em></p>
-    #{/if}
-    #{else}
-    	<table class="hoverable responsive-table">
-        	<thead>
-				<tr>
-					<th>Nom</th>
-					<th>Prénom</th>
-					<th>Adresse email</th>
-					<th>Téléphone</th>
-					<th>&nbsp;</th>
-				</tr>
-			</thead>
-			<tbody>
-				#{list zone.getResponsables(), as:'user'}
-				<tr>
-					<td>${user.nom}</td>
-					<td>${user.prenom}</td>
-					<td>${user.email}</td>
-					<td>${user.telephone}</td>
-					<td>
-						<a class="btn-floating waves-effect waves-light blue" href="/CPersonnes/utilisateurs?in=${user.id}"><i class="tiny mdi-content-forward" title="Voir détails"></i></a>
-						<a class="btn-floating waves-effect waves-light red" href="javascript:removeResponsableZone(${user.id}, ${zone.id})"><i class="tiny mdi-navigation-close" title="Supprimer"></i></a>
-					</td>
-				</tr>
-				#{/list}
-			<tbody>
-		</table>
-	#{/else}
-	#{if isAdmin}
-	<h5>Ajouter un responsable</h5>
-	<form class="col s12">
-		<div class="row">
-			<div class="input-field col s12 m8 l6">
-				<i class="mdi-action-account-circle prefix"></i>
-				<input type="text" id="nouveau-responsable" name="nouveau-responsable" placeHolder="Tapez le nom d'un utilisateur pour le rechercher" />
-				<input type="hidden" id="id-nouveau-responsable" name="id-nouveau-responsable" />
+#{if !zone.isRacine()}
+	<fieldset>
+		<legend>Responsables</legend>
+		#{if zone.getResponsables().size() == 0}
+	        <p><em>Aucun responsable à afficher</em></p>
+	    #{/if}
+	    #{else}
+	    	<table class="hoverable responsive-table">
+	        	<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Prénom</th>
+						<th>Adresse email</th>
+						<th>Téléphone</th>
+						<th>&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+					#{list zone.getResponsables(), as:'user'}
+					<tr>
+						<td>${user.nom}</td>
+						<td>${user.prenom}</td>
+						<td>${user.email}</td>
+						<td>${user.telephone}</td>
+						<td>
+							<a class="btn-floating waves-effect waves-light blue" href="/CPersonnes/utilisateurs?in=${user.id}"><i class="tiny mdi-content-forward" title="Voir détails"></i></a>
+							<a class="btn-floating waves-effect waves-light red" href="javascript:removeResponsableZone(${user.id}, ${zone.id})"><i class="tiny mdi-navigation-close" title="Supprimer"></i></a>
+						</td>
+					</tr>
+					#{/list}
+				<tbody>
+			</table>
+		#{/else}
+		#{if isAdmin}
+		<h5>Ajouter un responsable</h5>
+		<form class="col s12">
+			<div class="row">
+				<div class="input-field col s12 m8 l6">
+					<i class="mdi-action-account-circle prefix"></i>
+					<input type="text" id="nouveau-responsable" name="nouveau-responsable" placeHolder="Tapez le nom d'un utilisateur pour le rechercher" />
+					<input type="hidden" id="id-nouveau-responsable" name="id-nouveau-responsable" />
+				</div>
+				<div class="input-field col s12 m4 l6">
+					<a class="waves-effect waves-light btn green">Ajouter</a>
+				</div>
 			</div>
-			<div class="input-field col s12 m4 l6">
-				<a class="waves-effect waves-light btn green">Ajouter</a>
+		</form>
+		#{/if}
+	</fieldset>
+	<fieldset>
+		<legend>Utilisateurs autorisés</legend>
+		#{if zone.getPersonnesAutorise().size() == 0}
+	        <p><em>Aucun utilisateur à afficher</em></p>
+	    #{/if}
+	    #{else}
+	    	<table class="hoverable responsive-table">
+	        	<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Prénom</th>
+						<th>Adresse email</th>
+						<th>Téléphone</th>
+					</tr>
+				</thead>
+				<tbody>
+					#{list zone.getPersonnesAutorise(), as:'user'}
+					<tr>
+						<td>${user.nom}</td>
+						<td>${user.prenom}</td>
+						<td>${user.email}</td>
+						<td>${user.telephone}</td>
+					</tr>
+					#{/list}
+				<tbody>
+			</table>
+		#{/else}
+	
+		#{if isResponsable}
+		<h5>Ajouter un utilisateur autorisé</h5>
+		<form class="col s12">
+			<div class="row">
+				<div class="input-field col s12 m8 l6">
+					<i class="mdi-action-account-circle prefix"></i>
+					<input type="text" id="nouvelle-autorisation" name="nouvelle-autorisation" placeHolder="Tapez le nom d'un utilisateur pour le rechercher" />
+					<input type="hidden" id="id-nouvelle-autorisation" name="id-nouvelle-autorisation" />
+				</div>
+				<div class="input-field col s12 m4 l6">
+					<a class="waves-effect waves-light btn green">Ajouter</a>
+				</div>
 			</div>
-		</div>
-	</form>
-	#{/if}
-</fieldset>
-<fieldset>
-	<legend>Utilisateurs autorisés</legend>
-	#{if zone.getPersonnesAutorise().size() == 0}
-        <p><em>Aucun utilisateur à afficher</em></p>
-    #{/if}
-    #{else}
-    	<table class="hoverable responsive-table">
-        	<thead>
-				<tr>
-					<th>Nom</th>
-					<th>Prénom</th>
-					<th>Adresse email</th>
-					<th>Téléphone</th>
-				</tr>
-			</thead>
-			<tbody>
-				#{list zone.getPersonnesAutorise(), as:'user'}
-				<tr>
-					<td>${user.nom}</td>
-					<td>${user.prenom}</td>
-					<td>${user.email}</td>
-					<td>${user.telephone}</td>
-				</tr>
-				#{/list}
-			<tbody>
-		</table>
-	#{/else}
-
-	#{if isResponsable}
-	<h5>Ajouter un utilisateur autorisé</h5>
-	<form class="col s12">
-		<div class="row">
-			<div class="input-field col s12 m8 l6">
-				<i class="mdi-action-account-circle prefix"></i>
-				<input type="text" id="nouvelle-autorisation" name="nouvelle-autorisation" placeHolder="Tapez le nom d'un utilisateur pour le rechercher" />
-				<input type="hidden" id="id-nouvelle-autorisation" name="id-nouvelle-autorisation" />
-			</div>
-			<div class="input-field col s12 m4 l6">
-				<a class="waves-effect waves-light btn green">Ajouter</a>
-			</div>
-		</div>
-	</form>
-	#{/if}
-</fieldset>
+		</form>
+		#{/if}
+	</fieldset>
+#{/if}
 #{if isAdmin}
 <fieldset>
 	<legend>Capteur</legend>
