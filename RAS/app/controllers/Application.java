@@ -11,7 +11,7 @@ import models.*;
 public class Application extends Controller {
 
     public static void index() {
-        redirect("/cpersonnes/utilisateur");
+        redirect("/cpersonnes/utilisateurs");
     }
 
 }
