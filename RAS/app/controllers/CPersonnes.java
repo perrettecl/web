@@ -66,11 +66,7 @@ public class CPersonnes extends Controller {
 				
 				renderJSON(messages_erreurs);
 			}else if(!valideVilleCP(ville,codePostal)){
-				Map<String,String> messages_erreurs = new HashMap<String, String>();
-
-				messages_erreurs.put("codePostal","La ville et le code postal ne corresponde pas");
-				
-				renderJSON(messages_erreurs);
+				renderJSON("{\"erreur\" : \"true\", \"message\" : \"La ville et le code postal ne correspondent pas\"}");
 			} else {
 		    	 Personne user = Personne.findById(id);
 		    	 
@@ -117,11 +113,7 @@ public class CPersonnes extends Controller {
 				
 				renderJSON(messages_erreurs);
 			} else if(!valideVilleCP(ville,codePostal)){
-				Map<String,String> messages_erreurs = new HashMap<String, String>();
-
-				messages_erreurs.put("codePostal","La ville et le code postal ne corresponde pas");
-				
-				renderJSON(messages_erreurs);
+				renderJSON("{\"erreur\" : \"true\", \"message\" : \"La ville et le code postal ne correspondent pas\"}");
 			}else {
 		    	 Personne nouvelUtilisateur = new Personne(email, nom, prenom, telephone, adresse, codePostal, ville);
 		    	 nouvelUtilisateur.save();
