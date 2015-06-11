@@ -34,7 +34,7 @@ Personne(marc):
 Carte(carte1): 
   dateCreation: 2015-03-04
   dateExpiration: 2020-03-04
-  numero: 5124-5897-4578-1368
+  numero: "5124-5897-4578-1368"
   utilisateur: marc
   valide: fasle
   
@@ -42,7 +42,7 @@ Carte(carte1):
 Carte(carte2): 
   dateCreation: 2015-01-08
   dateExpiration: 2020-01-08
-  numero: 5124-5897-4578-1384
+  numero: "5124-5897-4578-1384"
   utilisateur: marc
   valide: true
   
@@ -50,13 +50,13 @@ Carte(carte2):
 Carte(carte3): 
   dateCreation: 2015-05-07
   dateExpiration: 2020-05-07
-  numero: 5124-5897-4578-8745
+  numero: "5124-5897-4578-8745"
   utilisateur: george
   valide: true
   
 Carte(carte4): 
   dateCreation: 2010-04-02
   dateExpiration: 2015-04-02
-  numero: 5124-5897-4578-4172
+  numero: "5124-5897-4578-4172"
   utilisateur: george
   valide: true
