@@ -1,6 +1,6 @@
 <h1>${user.prenom + " " + user.nom}</h1>
 
-<fieldset>
+<fieldset id="fieldset-infos">
 	<legend>Informations générales</legend>
 	<div class="row">
 		<form class="col s12">
@@ -16,7 +16,7 @@
 			</div>
 			<div class="input-field col s12 m6 l6">
 				<i class="mdi-communication-email prefix"></i>
-				<input type="email" class="validate" id="email" name="email" value="${user.email}">
+				<input type="email" class="validate" id="email" name="email" value="${user.email}" disabled>
 				<label for="email">Email</label>
 			</div>
 			<div class="input-field col s12 m6 l6">
@@ -38,6 +38,30 @@
 				<i class="mdi-communication-business prefix"></i>
 				<input type="text" class="validate" id="ville" name="ville" value="${user.ville}">
 				<label for="ville">Ville</label>
+			</div>
+			<a class="btn waves-effect waves-light green right" href="javascript:envoyerFormulaireModification(${user.id})">Modifier
+				<i class="mdi-content-send right"></i>
+			</a>
+			<a class="btn waves-effect waves-light orange right" href="javascript:resetMotDePasse(${user.id})">Réinitialiser mot de passe
+				<i class="mdi-action-lock right"></i>
+			</a>
+			<a class="btn waves-effect waves-light orange left" href="javascript:afficherModifMotDePasse(${user.id})">Modifier mon mot de passe
+				<i class="mdi-action-lock right"></i>
+			</a>
+			<div class="row" id="div-modif-mdp">
+				<div class="input-field col s12 m6 l6">
+					<i class="mdi-action-lock-open prefix"></i>
+					<input type="password" class="validate" id="newMdp" name="newMdp">
+					<label for="newMdp">Nouveau mot de passe</label>
+				</div>
+				<div class="input-field col s12 m6 l6">
+					<i class="mdi-action-lock prefix"></i>
+					<input type="password" class="validate" id="newMdpConf" name="newMdpConf">
+					<label for="newMdpConf">Confirmation mot de passe</label>
+				</div>
+				<a class="btn waves-effect waves-light green right" href="modifierMotDePasse(${user.id})">Valider
+					<i class="mdi-content-send right"></i>
+				</a>
 			</div>
 		</form>
 	</div>
@@ -86,7 +110,7 @@
 		</table>
 	#{/else}
 </fieldset>
-<fieldset>
+<fieldset id="fieldset-cartes">
 	<legend>Cartes</legend>
 	#{if user.getCartes().size() == 0}
         <p><em>Aucune carte à afficher</em></p>
@@ -104,7 +128,7 @@
 			<tbody>
 				#{list items:user.getCartes(), as:'carte'}
 				<tr id="carte-${carte.id}" class="#{if !carte.valide}red#{/if}#{else}green#{/else}">
-					<td>${carte.numero}</td>
+					<td>${carte.getNumero()}</td>
 					<td>${carte.dateCreation.format('dd/MM/yyyy')}</td>
 					<td>${carte.dateExpiration.format('dd/MM/yyyy')}</td>
 					<td>
@@ -117,4 +141,20 @@
 			<tbody>
 		</table>
 	#{/else}
+	<a class="btn waves-effect waves-light green right" href="javascript:afficherAjoutCarte(${user.id})" id="btn-ajout-carte">Ajouter une carte
+		<i class="mdi-content-add left"></i>
+	</a>
+	<div class="row" id="div-ajout-carte">
+		<div class="input-field col s12 m6 l6">
+			<i class="mdi-action-assignment-ind prefix"></i>
+			<input type="text" class="validate" id="numCarte" name="numCarte">
+			<label for="numCarte">Numéro carte</label>
+		</div>
+		<a class="btn waves-effect waves-light green right" href="javascript:ajouterCarte(${user.id})">Valider
+			<i class="mdi-content-send right"></i>
+		</a>
+		<a class="btn waves-effect waves-light red right" href="javascript:afficherAjoutCarte()">Annuler
+			<i class="mdi-navigation-close right"></i>
+		</a>
+	</div>
 </fieldset>

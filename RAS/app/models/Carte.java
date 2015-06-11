@@ -71,6 +71,7 @@ public class Carte extends Model {
 		this.numero = numero;
 		this.dateCreation = dateCreation;
 		this.dateExpiration = dateExpiration;
+		this.valide = true;
 		
 		this.save();
 	}
