@@ -1,0 +1,30 @@
+ #     Use Case - http://yuml.me/diagram/scruffy/usecase/draw
+ #
+ #     Utilisateur
+ #
+ [Utilisateur]-(Se connecter)
+ #
+ #     Utilisateur connecte
+ [Utilisateur connecte]-(Se deconnecter)
+ [Utilisateur connecte]-(Voir les fiches utilisateurs)
+ [Utilisateur connecte]-(Voir ses cartes)
+ [Utilisateur connecte]-(Voir les fiches des zones)
+ [Utilisateur connecte]-(Modifier son mot de passe)
+ #
+ #     Responsable de zone
+ [Responsable de zone]-(Editer les personnes autorises de la zone concernee)
+ #
+ #     Administrateur
+ [Administrateur]-(Editer des utilisateurs)
+ [Administrateur]-(Reset d'un mot de passe utilisateur)
+ [Administrateur]-(Edition d'une zone)
+ [Administrateur]-(Ajout de cartes à un utilisateur)
+ [Administrateur]-(Invalidation de cartes à un utilisateur)
+ [Administrateur]-(Edition des responsables de zones)
+ [Administrateur]-(Edition des capteurs)
+ [Administrateur]-(Faire une simulation d'entree)
+ #
+ #     Liens
+ [Utilisateur]<[Utilisateur connecte]
+ [Utilisateur connecte]<[Responsable de zone]
+ [Utilisateur connecte]<[Administrateur]

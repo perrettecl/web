@@ -80,5 +80,17 @@ public class Carte extends Model {
 		this.valide = false;
 		this.save();
 	}
+	
+	public void setNumero(String numero)
+	{
+		this.numero = numero;
+	}
+	
+	public static boolean existe(String numero) {
+		Query q = Carte.em().createQuery("SELECT c FROM Carte c WHERE c.numero=:arg");
+		q.setParameter("arg", numero);
+
+		return !q.getResultList().isEmpty();
+	}
 
 }
