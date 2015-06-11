@@ -60,3 +60,24 @@ Carte(carte4):
   numero: "5124-5897-4578-4172"
   utilisateur: george
   valide: true
+  
+Zone(Ext):
+  nom: "Extérieur"
+  racine: true
+  fils:
+    - Zone1
+  racine: true
+  
+Zone(Zone1):
+  nom: "Zone1"
+  racine: true
+  peres:
+    - Ext
+  
+Capteur(capteur1):
+  acces: Zone1
+  position: Ext
+  
+Capteur(capteur2):
+  acces: Ext
+  position: Zone1
