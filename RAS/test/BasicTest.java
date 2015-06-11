@@ -45,7 +45,7 @@ public class BasicTest extends UnitTest {
 	    assertEquals(true, perrettecl.verifMotDePasse("PERRETTE"));
 	}
 	
-	/*@Test
+	@Test
 	public void verifCreationCarte() throws Exception {
 	    // Create a new user and save it
 	    new Personne("perrette.c@gmail.com","Perrette", "Clément", null).save();
@@ -65,8 +65,7 @@ public class BasicTest extends UnitTest {
 	    c = Carte.find("byNumero","0001").first();
 	    assertNotNull(c);
 	    
-	    c.setUtilisateur(perrettecl);
-	    c.save();
+	    perrettecl.addCarte(c);
 	    perrettecl.save();
 	    
 	    
@@ -80,7 +79,7 @@ public class BasicTest extends UnitTest {
 	    
 	    
 	    
-	}*/
+	}
 	
 	@Test
 	public void recherchePersonne() throws Exception {
@@ -90,22 +89,46 @@ public class BasicTest extends UnitTest {
 	    
 	}
 	
-	/*@Test
-	public void sequenceCreation() throws Exception {
-	    // Create a new user and save it
-	    new Personne("perrette.c@gmail.com","Perrette", "Clément", null).save();
-	    new Personne("toto@gmail.com","Toto", "Titi", null).save();
-	    new Personne("admin@gmail.com","Admin", "Istrateur", null).save();
-	    
-	    // Retrieve the user with e-mail address perrette.c@gmail.com
-	    Personne perrettecl = Personne.find("byEmail", "perrette.c@gmail.com").first();
-	    Personne toto = Personne.find("byEmail", "toto@gmail.com").first();
-	    Personne admin = Personne.find("byEmail", "admin@gmail.com").first();
+	@Test
+	public void test_getRacine() {
+		Zone ext = Zone.getRacine();
+	    assertNotNull(ext);  
+	}
+	
+	@Test
+	public void test_verifAutorise() throws Exception {
+		Personne alain = Personne.find("byEmail", "alain.deloin@coin.com").first();
+		Personne marc = Personne.find("byEmail", "marc.leblanc@coin.com").first();
+		Zone zone1 = Zone.find("byNom", "Zone1").first();
+		Zone ext = Zone.getRacine();
+		
+		assertTrue(ext.verifAutorise(alain));
+		assertTrue(zone1.verifAutorise(marc));
+		assertFalse(zone1.verifAutorise(alain));
+	}
+	
+	@Test
+	public void test_verifResponsable() throws Exception {
+		Personne alain = Personne.find("byEmail", "alain.deloin@coin.com").first();
+		Personne marc = Personne.find("byEmail", "marc.leblanc@coin.com").first();
+		Zone zone1 = Zone.find("byNom", "Zone1").first();
 
-	    // Test 
-	    assertNotNull(perrettecl);
-	    assertEquals(true, perrettecl.verifMotDePasse("PERRETTE"));
-	}*/
+		assertTrue(zone1.verifResponsable(marc));
+		assertFalse(zone1.verifResponsable(alain));
+	}
+	
+	@Test
+	public void test_verifAutorisation() throws Exception {
+		
+		Carte carte_alain = Carte.find("byNumero", "9827-5897-4578-4172").first();
+		Carte carte_marc = Carte.find("byNumero", "5124-5897-4578-1384").first();
+		Capteur c_ext_vers_zone1 =  Capteur.find("byPosition", Zone.getRacine()).first();
+
+		assertTrue(Zone.verifAutorisation(carte_marc,c_ext_vers_zone1));
+		assertFalse(Zone.verifAutorisation(carte_alain,c_ext_vers_zone1));
+	}
+	
+
 	
 
 }

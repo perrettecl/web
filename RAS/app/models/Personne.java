@@ -28,7 +28,7 @@ public class Personne extends Model {
 	@OneToMany(mappedBy="utilisateur")
 	private Set<Carte> cartes = new HashSet<Carte>();
 	
-	@ManyToMany(targetEntity=models.Zone.class,mappedBy="responsables")
+	@ManyToMany(targetEntity=models.Zone.class, mappedBy="responsables")
 	private Set<Zone> zonesResponsable = new HashSet<Zone>();
 	
 	@ManyToMany(targetEntity=models.Zone.class, mappedBy="personnesAutorise")
@@ -195,6 +195,14 @@ public class Personne extends Model {
 		return zonesAutorise;
 	}
 
+
+	public void setZonesResponsable(Set<Zone> zonesResponsable) {
+		this.zonesResponsable = zonesResponsable;
+	}
+
+	public void setZonesAutorise(Set<Zone> zonesAutorise) {
+		this.zonesAutorise = zonesAutorise;
+	}
 
 	private static String encodeMotDePasse(String mdp)
 	{

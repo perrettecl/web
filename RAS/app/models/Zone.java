@@ -3,6 +3,7 @@ package models;
 import play.*;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.security.*;
 
 import play.db.jpa.*;
@@ -16,6 +17,7 @@ public class Zone extends Model {
 	private String nom;
 	private String adresse;
 	private String codePostal;
+
 	private String ville;
 	private String info;
 	private boolean accesExclusif;
@@ -25,7 +27,13 @@ public class Zone extends Model {
 		this.racine = racine;
 	}
 
+
+	
 	@ManyToMany(targetEntity=models.Personne.class)
+	@JoinTable(name = "Responsable_Zone", joinColumns =
+	{ @JoinColumn(name = "zonesresponsable_id", nullable = false) },
+	inverseJoinColumns = { @JoinColumn(name =
+	"responsables_id", nullable = false) })
 	private Set<Personne> responsables;
 	
 	public void setPeres(Set<Zone> peres) {
@@ -36,7 +44,12 @@ public class Zone extends Model {
 		this.fils = fils;
 	}
 
+	
 	@ManyToMany(targetEntity=models.Personne.class)
+	@JoinTable(name = "AUTORISE_ZONE", joinColumns =
+	{ @JoinColumn(name = "ZONESAUTORISE_ID", nullable = false) },
+	inverseJoinColumns = { @JoinColumn(name =
+	"PERSONNESAUTORISE_ID", nullable = false) })
 	private Set<Personne> personnesAutorise;
 	
 	@OneToMany(targetEntity = models.Capteur.class, mappedBy= "position")
@@ -73,6 +86,14 @@ public class Zone extends Model {
 		return adresse;
 	}
 
+	public void setResponsables(Set<Personne> responsables) {
+		this.responsables = responsables;
+	}
+
+	public void setPersonnesAutorise(Set<Personne> personnesAutorise) {
+		this.personnesAutorise = personnesAutorise;
+	}
+	
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
 		this.save();
@@ -191,7 +212,7 @@ public class Zone extends Model {
 	
 	public static Zone getRacine()
 	{
-		return Zone.find("SELECT z FROM Zone z WHERE z.racine").first();
+		return Zone.find("SELECT z FROM Zone z WHERE z.racine=true").first();
 	}
 	
 	public static Set<Zone> getPremierNiveau()
@@ -201,12 +222,61 @@ public class Zone extends Model {
 	
 	public boolean verifResponsable(Personne user)
 	{
-		return true;
+		Query q = Zone.em().createNativeQuery("SELECT count(zr.*) FROM  Responsable_Zone rz where rz.zonesresponsable_id=:id_zone and rz.responsables_id=:id_user");
+		q.setParameter("id_zone", this.id);
+		q.setParameter("id_user", user.id);
+		
+		BigInteger count = ((BigInteger)q.getSingleResult());
+		
+		return count.intValue() > 0;
 	}
 	
 	public boolean verifAutorise(Personne user)
 	{
-		return true;
+		//cas de la zone exterieur
+		if(this.id==Zone.getRacine().id)
+			return true;
+		
+		Query q = Zone.em().createNativeQuery("SELECT count(az.*) FROM  Autorise_Zone az where az.ZONESAUTORISE_ID=:id_zone and az.PERSONNESAUTORISE_ID=:id_user");
+		q.setParameter("id_zone", this.id);
+		q.setParameter("id_user", user.id);
+		BigInteger count = ((BigInteger)q.getSingleResult());
+		
+		return count.intValue() > 0;
+	}
+	
+	public static boolean verifAutorisation(Carte carte, Capteur capteur)
+	{
+		// carte invalide
+		if(!carte.isValide())
+			return false;
+		
+		// zone exterieur
+		if(capteur.getAcces().id == Zone.getRacine().id)
+			return true;
+		
+		Query q = Zone.em().createNativeQuery("select count(az.*)  from CARTE b, CAPTEUR c, AUTORISE_ZONE az, PERSONNE p where az.ZONESAUTORISE_ID=c.acces_id and az.PERSONNESAUTORISE_ID=b.utilisateur_id and c.id=:id_capteur and b.id=:id_carte");
+		q.setParameter("id_capteur", capteur.id);
+		q.setParameter("id_carte", carte.id);
+		
+		BigInteger count = ((BigInteger)q.getSingleResult());
+		
+		return count.intValue() > 0;
+		
+	}
+	
+	
+	public Zone getFirstPere()
+	{
+		Zone retour = null;
+		
+		for(Zone z: peres)
+		{
+			retour = z;
+			break;
+		}
+		
+		return retour;
 	}
 	
 }

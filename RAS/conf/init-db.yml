@@ -29,6 +29,16 @@ Personne(marc):
   prenom: "Marc"
   telephone: "0606734618"
   ville: "Clessy"
+  
+Personne(alain): 
+  admin: fasle
+  adresse: "Les Usages"
+  codePostal: "71130"
+  email: alain.deloin@coin.com
+  nom: "Deloin"
+  prenom: "Alain"
+  telephone: "0606734618"
+  ville: "Clessy"
 
 
 Carte(carte1): 
@@ -61,11 +71,19 @@ Carte(carte4):
   utilisateur: george
   valide: true
   
+Carte(carte5): 
+  dateCreation: 2015-04-02
+  dateExpiration: 2020-04-02
+  numero: "9827-5897-4578-4172"
+  utilisateur: alain
+  valide: true
+  
 Zone(Ext):
   nom: "Extérieur"
   racine: true
   fils:
     - Zone1
+  
   racine: true
   
 Zone(Zone1):
@@ -73,6 +91,11 @@ Zone(Zone1):
   racine: true
   peres:
     - Ext
+  responsables:
+    - marc
+  personnesAutorise:
+    - marc
+    - george
   
 Capteur(capteur1):
   acces: Zone1
