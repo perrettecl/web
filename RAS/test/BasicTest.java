@@ -118,6 +118,13 @@ public class BasicTest extends UnitTest {
 	}
 	
 	@Test
+	public void test_getFirstPere() throws Exception {
+		Zone zone1 = Zone.find("byNom", "Zone1").first();
+
+		assertTrue(zone1.getFirstPere().id == Zone.getRacine().id);
+	}
+	
+	@Test
 	public void test_verifAutorisation() throws Exception {
 		
 		Carte carte_alain = Carte.find("byNumero", "9827-5897-4578-4172").first();
