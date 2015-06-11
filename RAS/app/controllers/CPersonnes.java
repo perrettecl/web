@@ -111,10 +111,10 @@ public class CPersonnes extends Controller {
 		Carte c = Carte.find("byId", id).first();
 		
 		if(c == null) {
-			renderJSON("{erreur: true}");
+			renderJSON("{\"erreur\": \"true\"}");
 		} else {
 			c.invaliderCarte();
-			renderJSON("{erreur: false}");
+			renderJSON("{\"erreur\": \"false\"}");
 		}
 	}
 }
