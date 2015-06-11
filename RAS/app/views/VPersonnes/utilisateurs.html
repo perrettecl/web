@@ -4,7 +4,11 @@
 <div class="row">
 		<section>
 			<ul class="collection with-header col s12 m12 l2 z-depth-1 menu-gauche" id="liste-utilisateurs">
-				<li class="collection-header"><h4>Utilisateurs <a class="btn-floating waves-effect waves-light green right" href="javascript:nouvelUtilisateur()"><i class="mdi-content-add" title="Créer un utilisateur"></i></a></h4></li>
+				<li class="collection-header"><h4>Utilisateurs 
+				#{if isAdmin}
+					<a class="btn-floating waves-effect waves-light green right" href="javascript:nouvelUtilisateur()"><i class="mdi-content-add" title="Créer un utilisateur"></i></a>
+				#{/if}
+				</h4></li>
 				<form>
 					<div class="input-field">
 					<input id="search" type="search" required>

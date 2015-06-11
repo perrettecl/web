@@ -24,129 +24,139 @@ public class CPersonnes extends Controller {
 	{
 		current_user = Personne.find("byEmail", session.get("username")).first();
 	}
-	
+
 	public static void resetMotDePasse(long id) {
-		Personne user = Personne.findById(id);
-		
-		if(user != null) {
-			user.resetMotDePasse();
-			user.save();
+		if(current_user.isAdmin()) {
+			Personne user = Personne.findById(id);
 			
-			renderJSON("{\"erreur\" : \"false\"}");
-		} else {
-			renderJSON("{\"erreur\" : \"true\"}");
+			if(user != null) {
+				user.resetMotDePasse();
+				user.save();
+				
+				renderJSON("{\"erreur\" : \"false\"}");
+			} else {
+				renderJSON("{\"erreur\" : \"true\"}");
+			}
 		}
 	}
 	
 	public static void modifierUtilisateur(long id, String nom, String prenom, String telephone, String adresse, String codePostal, String ville) throws Exception {
-		validation.required(nom);
-		validation.required("prénom", prenom);
-		validation.required("téléphone", telephone);
-		validation.phone("téléphone", telephone);
-		validation.required(adresse);
-		validation.required("code postal", codePostal);
-		validation.match("code postal", codePostal, "^[0-9]{5}$");
-		validation.required(ville);
-		
-		if(validation.hasErrors()) {
-			Map<String,String> messages_erreurs = new HashMap<String,String>();
+		if(current_user.isAdmin()) {
+			validation.required(nom);
+			validation.required("prénom", prenom);
+			validation.required("téléphone", telephone);
+			validation.phone("téléphone", telephone);
+			validation.required(adresse);
+			validation.required("code postal", codePostal);
+			validation.match("code postal", codePostal, "^[0-9]{5}$");
+			validation.required(ville);
 			
-			for(play.data.validation.Error error : validation.errors()) {
-				messages_erreurs.put(error.getKey(), error.message());
+			if(validation.hasErrors()) {
+				Map<String,String> messages_erreurs = new HashMap<String,String>();
+				
+				for(play.data.validation.Error error : validation.errors()) {
+					messages_erreurs.put(error.getKey(), error.message());
+				}
+				
+				messages_erreurs.put("erreur", "true");
+				
+				renderJSON(messages_erreurs);
+			} else {
+		    	 Personne user = Personne.findById(id);
+		    	 
+		    	 user.setNom(nom);
+		    	 user.setPrenom(prenom);
+		    	 user.setTelephone(telephone);
+		    	 user.setAdresse(adresse);
+		    	 user.setCodePostal(codePostal);
+		    	 user.setVille(ville);
+		    	 
+		    	 user.save();
+		    	 
+		    	 renderJSON("{\"erreur\" : \"false\"}");
 			}
-			
-			messages_erreurs.put("erreur", "true");
-			
-			renderJSON(messages_erreurs);
-		} else {
-	    	 Personne user = Personne.findById(id);
-	    	 
-	    	 user.setNom(nom);
-	    	 user.setPrenom(prenom);
-	    	 user.setTelephone(telephone);
-	    	 user.setAdresse(adresse);
-	    	 user.setCodePostal(codePostal);
-	    	 user.setVille(ville);
-	    	 
-	    	 user.save();
-	    	 
-	    	 renderJSON("{\"erreur\" : \"false\"}");
 		}
 	}
 	
 	public static void creerUtilisateur(String nom, String prenom, String email, String telephone, String adresse, String codePostal, String ville) throws Exception {
-		validation.required(nom);
-		validation.required("prénom", prenom);
-		validation.required(email);
-		validation.email(email);
-		
-		if(Personne.find("byEmail", email).first() != null) {
-			validation.addError("email", "L'adresse email existe déja");
-	    }
-		
-		validation.required("téléphone", telephone);
-		validation.phone("téléphone", telephone);
-		validation.required(adresse);
-		validation.required("code postal", codePostal);
-		validation.match("code postal", codePostal, "^[0-9]{5}$");
-		validation.required(ville);
-		
-		if(validation.hasErrors()) {
-			Map<String,String> messages_erreurs = new HashMap<String,String>();
+		if(current_user.isAdmin()) {
+			validation.required(nom);
+			validation.required("prénom", prenom);
+			validation.required(email);
+			validation.email(email);
 			
-			for(play.data.validation.Error error : validation.errors()) {
-				messages_erreurs.put(error.getKey(), error.message());
+			if(Personne.find("byEmail", email).first() != null) {
+				validation.addError("email", "L'adresse email existe déja");
+		    }
+			
+			validation.required("téléphone", telephone);
+			validation.phone("téléphone", telephone);
+			validation.required(adresse);
+			validation.required("code postal", codePostal);
+			validation.match("code postal", codePostal, "^[0-9]{5}$");
+			validation.required(ville);
+			
+			if(validation.hasErrors()) {
+				Map<String,String> messages_erreurs = new HashMap<String,String>();
+				
+				for(play.data.validation.Error error : validation.errors()) {
+					messages_erreurs.put(error.getKey(), error.message());
+				}
+				
+				messages_erreurs.put("erreur", "true");
+				
+				renderJSON(messages_erreurs);
+			} else {
+		    	 Personne nouvelUtilisateur = new Personne(email, nom, prenom, telephone, adresse, codePostal, ville);
+		    	 nouvelUtilisateur.save();
+		    	 
+		    	 renderJSON("{\"erreur\" : \"false\", \"id\" : \"" + nouvelUtilisateur.id + "\"}");
 			}
-			
-			messages_erreurs.put("erreur", "true");
-			
-			renderJSON(messages_erreurs);
-		} else {
-	    	 Personne nouvelUtilisateur = new Personne(email, nom, prenom, telephone, adresse, codePostal, ville);
-	    	 nouvelUtilisateur.save();
-	    	 
-	    	 renderJSON("{\"erreur\" : \"false\", \"id\" : \"" + nouvelUtilisateur.id + "\"}");
 		}
 	}
 	
 	public static void ajouterCarte(long id, String numeroCarte) {
-		Personne user = Personne.findById(id);
-		
-		if(user != null) {
+		if(current_user.isAdmin()) {
+			Personne user = Personne.findById(id);
 			
-			if(!Carte.existe(numeroCarte)) {
-				DateTime dateJour = new DateTime();
-				DateTime dateFin = dateJour.plusYears(2);
+			if(user != null) {
 				
-				Carte carte = new Carte(numeroCarte, dateJour.toDate(), dateFin.toDate());
-
-				user.addCarte(carte);
-				
-				user.save();
-				
-				renderJSON("{\"erreur\" : \"false\"}");
+				if(!Carte.existe(numeroCarte)) {
+					DateTime dateJour = new DateTime();
+					DateTime dateFin = dateJour.plusYears(2);
+					
+					Carte carte = new Carte(numeroCarte, dateJour.toDate(), dateFin.toDate());
+	
+					user.addCarte(carte);
+					
+					user.save();
+					
+					renderJSON("{\"erreur\" : \"false\"}");
+				} else {
+					renderJSON("{\"erreur\" : \"true\", \"message\" : \"Ce numéro de carte existe déjà\"}");
+				}
 			} else {
-				renderJSON("{\"erreur\" : \"true\", \"message\" : \"Ce numéro de carte existe déjà\"}");
+				renderJSON("{\"erreur\" : \"true\", \"message\" : \"Utilisateur introuvable\"}");
 			}
-		} else {
-			renderJSON("{\"erreur\" : \"true\", \"message\" : \"Utilisateur introuvable\"}");
 		}
 	}
 	
 	public static void modifierMotDePasse(long id, String newMdp, String newMdpConf) {
-		Personne user = Personne.findById(id);
-		
-		if(user != null) {
-			if(newMdp.equals(newMdpConf)) {
-				user.setMotDePasse(newMdp);
-				user.save();
-				
-				renderJSON("{\"erreur\" : \"false\"}");
+		if(id == current_user.id) {
+			Personne user = Personne.findById(id);
+			
+			if(user != null) {
+				if(newMdp.equals(newMdpConf)) {
+					user.setMotDePasse(newMdp);
+					user.save();
+					
+					renderJSON("{\"erreur\" : \"false\"}");
+				} else {
+					renderJSON("{\"erreur\" : \"true\", \"message\" : \"Le mot de passe et sa confirmation sont différents\"}");
+				}
 			} else {
-				renderJSON("{\"erreur\" : \"true\", \"message\" : \"Le mot de passe et sa confirmation sont différents\"}");
+				renderJSON("{\"erreur\" : \"true\", \"message\" : \"Utilisateur introuvable\"}");
 			}
-		} else {
-			renderJSON("{\"erreur\" : \"true\", \"message\" : \"Utilisateur introuvable\"}");
 		}
 	}
 	
@@ -166,11 +176,15 @@ public class CPersonnes extends Controller {
 		} else {
 			id = Long.parseLong(in);
 		}
-		render("VPersonnes/utilisateurs.html", id);
+		
+		boolean isAdmin = current_user.isAdmin();
+		render("VPersonnes/utilisateurs.html", id, isAdmin);
 	}
 	
-	public static void nouvelUtilisateur() {			
-		render("VPersonnes/nouvel_utilisateur.html");
+	public static void nouvelUtilisateur() {
+		if(current_user.isAdmin()) {
+			render("VPersonnes/nouvel_utilisateur.html");
+		}
 	}
 	
 	public static void getInfosUtilisateur(long id) {
@@ -182,19 +196,23 @@ public class CPersonnes extends Controller {
 		
 		if(user == null) {
 			render("VPersonnes/utilisateur_introuvable.html");
-		} else {			
-			render("VPersonnes/fiche_utilisateur.html", user);
+		} else {				
+			boolean isAdmin = current_user.isAdmin();
+			long current_user_id = current_user.id;
+			render("VPersonnes/fiche_utilisateur.html", user, isAdmin, current_user_id);
 		}
 	}
 	
 	public static void invaliderCarte(long id) {
-		Carte c = Carte.find("byId", id).first();
-		
-		if(c == null) {
-			renderJSON("{\"erreur\": \"true\"}");
-		} else {
-			c.invaliderCarte();
-			renderJSON("{\"erreur\": \"false\"}");
+		if(current_user.isAdmin()) {
+			Carte c = Carte.find("byId", id).first();
+			
+			if(c == null) {
+				renderJSON("{\"erreur\": \"true\"}");
+			} else {
+				c.invaliderCarte();
+				renderJSON("{\"erreur\": \"false\"}");
+			}
 		}
 	}
 }
