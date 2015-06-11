@@ -32,7 +32,9 @@ function getInfosUtilisateur(id) {
 	  .done(function( data ) {
 	    $("#corps").html(data);
 	  });
+
     modifMotDePasseAffiche = false;
+	$("#div-modif-mdp").hide();
    	ajoutCarteAffiche = false;
 	$("#div-ajout-carte").hide();
    	
@@ -97,6 +99,8 @@ function modifierMotDePasse(idPersonne) {
 		success: 	function(data) {
 						if(data["erreur"] == "false") {
 							Materialize.toast('<span>Mot de passe modifié</span>&nbsp;<i class="mdi-action-done prefix active"></i>', 5000, 'green');
+							modifMotDePasseAffiche = false;
+							$("#div-modif-mdp").hide();
 						} else if (data["erreur"] == "true") {
 							$.each(data, function(i, field){
 								if(i != "erreur")

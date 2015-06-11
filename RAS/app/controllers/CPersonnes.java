@@ -8,9 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-
-
-
 import org.joda.time.DateTime;
 
 import play.*;
@@ -26,23 +23,6 @@ public class CPersonnes extends Controller {
 	public static void setCurrentUser()
 	{
 		current_user = Personne.find("byEmail", session.get("username")).first();
-	}
-
-	 
-	public static void test() {
-		try {
-			Personne une = new Personne("moi@test.fr", "Moi", "Moi", "0102030405");
-			Personne deux = new Personne("toi@test.fr", "Toi", "Toi", "0102030406");
-			
-			une.save();
-			deux.save();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		List<Personne> liste = Personne.findAll(); 
-		String title = "Ceci est un test";
-		
-		render("VPersonnes/liste_personnes.html", liste, title);
 	}
 	
 	public static void resetMotDePasse(long id) {
@@ -134,7 +114,7 @@ public class CPersonnes extends Controller {
 		
 		if(user != null) {
 			
-			if(Carte.find("byNumero", numeroCarte).first() != "null") {
+			if(!Carte.existe(numeroCarte)) {
 				DateTime dateJour = new DateTime();
 				DateTime dateFin = dateJour.plusYears(2);
 				
@@ -146,10 +126,10 @@ public class CPersonnes extends Controller {
 				
 				renderJSON("{\"erreur\" : \"false\"}");
 			} else {
-				renderJSON("{\"erreur\" : \"true\"}, \"message\" : \"Ce numéro de carte existe déjà\"");
+				renderJSON("{\"erreur\" : \"true\", \"message\" : \"Ce numéro de carte existe déjà\"}");
 			}
 		} else {
-			renderJSON("{\"erreur\" : \"true\"}, \"message\" : \"Utilisateur introuvable\"");
+			renderJSON("{\"erreur\" : \"true\", \"message\" : \"Utilisateur introuvable\"}");
 		}
 	}
 	
@@ -157,14 +137,16 @@ public class CPersonnes extends Controller {
 		Personne user = Personne.findById(id);
 		
 		if(user != null) {
-			if(newMdp == newMdpConf) {
+			if(newMdp.equals(newMdpConf)) {
 				user.setMotDePasse(newMdp);
 				user.save();
+				
+				renderJSON("{\"erreur\" : \"false\"}");
 			} else {
-				renderJSON("{\"erreur\" : \"true\"}, \"message\" : \"Le mot de passe et sa confirmation sont différents\"");
+				renderJSON("{\"erreur\" : \"true\", \"message\" : \"Le mot de passe et sa confirmation sont différents\"}");
 			}
 		} else {
-			renderJSON("{\"erreur\" : \"true\"}, \"message\" : \"Utilisateur introuvable\"");
+			renderJSON("{\"erreur\" : \"true\", \"message\" : \"Utilisateur introuvable\"}");
 		}
 	}
 	
