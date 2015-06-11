@@ -2,7 +2,13 @@ package controllers;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections.MultiHashMap;
+import org.apache.commons.collections.MultiMap;
 
 import play.*;
 import play.mvc.*;
@@ -39,16 +45,21 @@ public class CPersonnes extends Controller {
 		validation.required(ville);
 		
 		if(validation.hasErrors()) {
-			List<play.data.validation.Error> erreurs = validation.errors();
+			;
 			
-			ArrayList<String> erreursAL = new ArrayList<String>();
+			Map<String, HashSet<String>> messages_erreurs = new HashMap<String, HashSet<String>>();
 			
-			for(play.data.validation.Error error : erreurs) {
-				erreursAL.add(error.toString());
-				System.out.println(error);
+			for(play.data.validation.Error error : validation.errors()) {
+				if(messages_erreurs.get(error.getKey()) == null){
+					messages_erreurs.put(error.getKey(), new HashSet<String>());
+				}
+				messages_erreurs.get(error.getKey()).add(error.message());
+
+				System.out.println(error.message()+" " +error.getKey());
 			}
-			
-			renderJSON(erreurs.toString());
+
+
+			renderJSON(messages_erreurs);
 		} else {
 	    	 Personne nouvelUtilisateur = new Personne(email, nom, prenom, telephone, adresse, codePostal, ville);
 	    	 nouvelUtilisateur.save();
