@@ -7,15 +7,22 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.MultiHashMap;
-import org.apache.commons.collections.MultiMap;
-
 import play.*;
 import play.mvc.*;
+import play.test.Fixtures;
 import models.*;
 
 @With(Secure.class)
 public class CPersonnes extends Controller {
+	static Personne current_user;
+	
+	@Before
+	public static void setCurrentUser()
+	{
+		current_user = Personne.find("byEmail", session.get("username")).first();
+	}
+
+	 
 	public static void test() {
 		try {
 			Personne une = new Personne("moi@test.fr", "Moi", "Moi", "0102030405");
@@ -54,8 +61,6 @@ public class CPersonnes extends Controller {
 					messages_erreurs.put(error.getKey(), new HashSet<String>());
 				}
 				messages_erreurs.get(error.getKey()).add(error.message());
-
-				System.out.println(error.message()+" " +error.getKey());
 			}
 
 
@@ -81,8 +86,7 @@ public class CPersonnes extends Controller {
 			Personne p = Personne.find("byEmail", Security.connected()).first();
 
 			id = p.id;
-			
-			System.out.println(id);
+
 		} else {
 			id = Long.parseLong(in);
 		}
