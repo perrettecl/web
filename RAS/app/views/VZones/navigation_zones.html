@@ -1,0 +1,9 @@
+<div class="collection with-header col s12 m12 l2 z-depth-1 menu-gauche" id="liste-zones">
+	<h4><span id="spanNomZoneNav">${zone.nom}</span> #{if isAdmin}<a class="btn-floating waves-effect waves-light green right" href="javascript:creerZone(${zone.id})"><i class="mdi-content-add" title="Créer une zone"></i></a>#{/if}</h4>
+	#{if !zone.isRacine()}
+		<a href="javascript:afficherZone(${zone.getFirstPere().id})" class="collection-item a-nav-back"><i class="mdi-navigation-arrow-back prefix active left"></i>&nbsp;Retour</a>
+	#{/if}
+	#{list zone.getFils(), as:'zoneFils'}
+	<a href="javascript:afficherZone(${zoneFils.id})" class="collection-item">${zoneFils.nom}<i class="mdi-navigation-arrow-forward prefix active right"></i></a>
+	#{/list}
+</div>
