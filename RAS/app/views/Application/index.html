@@ -1,4 +1,51 @@
 #{extends 'main.html' /}
 #{set title:'Accueil' /}
 
-Salut
+<div class="row">
+	<section class="corps col s12 m12 offset-l1 l10" id="corps">
+		<div class="card col s12 m4 l4">
+			<div class="card-image waves-effect waves-block waves-light">
+		      <img class="activator" src="@{'/public/images/zone-1.jpeg'}">
+		    </div>
+		    <div class="card-content">
+		      <span class="card-title activator grey-text text-darken-4">Zones <i class="mdi-navigation-more-vert right"></i></span>
+		      <p><a href="@{CZone.zones}">S'y rendre</a></p>
+		    </div>
+		    <div class="card-reveal">
+		      <span class="card-title grey-text text-darken-4">Zones <i class="mdi-navigation-close right"></i></span>
+		      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+		    </div>
+		</div>
+		  
+		<div class="card col s12 m4 l4">
+			<div class="card-image waves-effect waves-block waves-light">
+		      <img class="activator" src="@{'/public/images/utilisateur-1.jpeg'}">
+		    </div>
+		    <div class="card-content">
+		      <span class="card-title activator grey-text text-darken-4">Utilisateurs <i class="mdi-navigation-more-vert right"></i></span>
+		      <p><a href="@{CPersonnes.utilisateurs}">S'y rendre</a></p>
+		    </div>
+		    <div class="card-reveal">
+		      <span class="card-title grey-text text-darken-4">Utilisateur <i class="mdi-navigation-close right"></i></span>
+		      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+		    </div>
+		</div>
+		<div class="card col s12 m4 l4">
+			<div class="card-image waves-effect waves-block waves-light">
+		      <img class="activator" src="@{'/public/images/bagde-1.jpeg'}">
+		    </div>
+		    <div class="card-content">
+		      <span class="card-title activator grey-text text-darken-4">Test des autorisations <i class="mdi-navigation-more-vert right"></i></span>
+		      <p><a href="@{CTestAutorisation.index}">S'y rendre</a></p>
+		    </div>
+		    <div class="card-reveal">
+		      <span class="card-title grey-text text-darken-4">Utilisateur <i class="mdi-navigation-close right"></i></span>
+		      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+		    </div>
+		</div>
+	</section>
+</div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="@{'/public/materialize/js/materialize.min.js'}"></script>
+            

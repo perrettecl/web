@@ -3,6 +3,7 @@
  #     Utilisateur
  #
  [Utilisateur]-(Se connecter)
+ [Utilisateur]-(Faire une simulation d'entree)
  #
  #     Utilisateur connecte
  [Utilisateur connecte]-(Se deconnecter)
@@ -22,7 +23,6 @@
  [Administrateur]-(Invalidation de cartes à un utilisateur)
  [Administrateur]-(Edition des responsables de zones)
  [Administrateur]-(Edition des capteurs)
- [Administrateur]-(Faire une simulation d'entree)
  #
  #     Liens
  [Utilisateur]<[Utilisateur connecte]
