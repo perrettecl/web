@@ -245,4 +245,8 @@ public class CZone extends Controller {
     	}
     	renderJSON(liste_zone);
     }
+    
+    public static void verifierAutorisation(long idCarte, long idCapteur) {
+    	
+    }
 }

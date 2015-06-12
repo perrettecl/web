@@ -261,26 +261,53 @@ public class Zone extends Model {
 	
 	public static boolean verifAutorisation(Carte carte, Capteur capteur)
 	{
+		Personne user = carte.getUtilisateur();
 		
 		// carte invalide
 		if(!carte.isValide())
 		{
-			Evenement ev = new Evenement(new Date(), "Accès refusé : la carte numéro "+carte.getNumero()+" est invalide.");
+			String descEv = "";
+			descEv += "ACCES REFUSE depuis " + capteur.getPosition() + " vers " + capteur.getAcces() + " (capteur " + capteur.getId() + "), ";
+			descEv += "à " + user.getPrenom() + " " + user.getNom() + " ";
+			descEv += "(la carte numéro " + carte.getNumero() + " est invalide)."; 
+			
+			Evenement ev = new Evenement(new Date(), descEv);
 			ev.save();
 			return false;
 		}
-		// zone exterieur
-		if(capteur.getAcces().id == Zone.getRacine().id)
-			return true;
 		
-		Query q = Zone.em().createNativeQuery("select count(az.*)  from CARTE b, CAPTEUR c, AUTORISE_ZONE az, PERSONNE p where az.ZONESAUTORISE_ID=c.acces_id and az.PERSONNESAUTORISE_ID=b.utilisateur_id and c.id=:id_capteur and b.id=:id_carte");
-		q.setParameter("id_capteur", capteur.id);
-		q.setParameter("id_carte", carte.id);
+		boolean accesAutorise;
+		if(capteur.getAcces().id == Zone.getRacine().id) {
+			// zone exterieur
+			accesAutorise = true;
+		} else {
+			Query q = Zone.em().createNativeQuery("select count(az.*)  from CARTE b, CAPTEUR c, AUTORISE_ZONE az, PERSONNE p where az.ZONESAUTORISE_ID=c.acces_id and az.PERSONNESAUTORISE_ID=b.utilisateur_id and c.id=:id_capteur and b.id=:id_carte");
+			q.setParameter("id_capteur", capteur.id);
+			q.setParameter("id_carte", carte.id);
+			
+			BigInteger count = ((BigInteger)q.getSingleResult());
+			
+			accesAutorise = count.intValue() > 0;
+		}
+				
+		String descEv = "";
+		if(accesAutorise) {
+			descEv += "ACCES AUTORISE ";
+		} else {
+			descEv += "ACCES REFUSE ";
+		}
 		
-		BigInteger count = ((BigInteger)q.getSingleResult());
+		descEv += "depuis " + capteur.getPosition() + " vers " + capteur.getAcces() + " (capteur " + capteur.getId() + "), ";
+		descEv += "à " + user.getPrenom() + " " + user.getNom();
 		
-		return count.intValue() > 0;
+		if(!accesAutorise) {
+			descEv += " (l'utilisateur n'est pas autorisé à accéder à cette zone).";
+		}
 		
+		Evenement ev = new Evenement(new Date(), descEv);
+		ev.save();
+		
+		return accesAutorise;
 	}
 	
 	
