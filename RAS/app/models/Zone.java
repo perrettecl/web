@@ -296,7 +296,7 @@ public class Zone extends Model {
 	public List<Personne> listePersonneNonResponsable(String debut_nom)
 	{
 		List<Personne> list = null;
-		Query q = Personne.em().createNativeQuery("(select p.* from PERSONNE p Where p.nom like :chaine or p.prenom like :chaine) minus (select p.* from Responsable_Zone rz, PERSONNE p where rz.zonesresponsable_id=:zone_id and rz.responsables_id=p.id )");
+		Query q = Personne.em().createNativeQuery("(select p.* from PERSONNE p Where LOWER(p.nom) like LOWER(:chaine) or LOWER(p.prenom) like LOWER(:chaine)) minus (select p.* from Responsable_Zone rz, PERSONNE p where rz.zonesresponsable_id=:zone_id and rz.responsables_id=p.id )");
 		q.setParameter("zone_id", this.id);
 		q.setParameter("chaine", "%"+debut_nom+"%");
 		list = q.getResultList();
@@ -307,7 +307,7 @@ public class Zone extends Model {
 	public List<Personne> listePersonneNonAutorise(String debut_nom)
 	{
 		List<Personne> list = null;
-		Query q = Personne.em().createNativeQuery("(select p.* from PERSONNE p Where p.nom like :chaine or p.prenom like :chaine) minus (select p.* from AUTORISE_ZONE az, PERSONNE p where az.ZONESAUTORISE_ID=:zone_id and az.PERSONNESAUTORISE_ID=p.id )");
+		Query q = Personne.em().createNativeQuery("(select p.* from PERSONNE p Where LOWER(p.nom) like LOWER(:chaine) or LOWER(p.prenom) like LOWER(:chaine)) minus (select p.* from AUTORISE_ZONE az, PERSONNE p where az.ZONESAUTORISE_ID=:zone_id and az.PERSONNESAUTORISE_ID=p.id )");
 		q.setParameter("zone_id", this.id);
 		q.setParameter("chaine", "%"+debut_nom+"%");
 		list = q.getResultList();
@@ -315,5 +315,15 @@ public class Zone extends Model {
 		return list;
 	}
 	
+	public List<Zone> listeAutresZone(String debut_nom)
+	{
+		List<Zone> list = null;
+		Query q = Personne.em().createQuery("select z from Zone z Where z.id<>:id_zone and LOWER(z.nom) like LOWER(:chaine)");
+		q.setParameter("id_zone", this.id);
+		q.setParameter("chaine", "%"+debut_nom+"%");
+		list = q.getResultList();
+		
+		return list;
+	}
 
 }

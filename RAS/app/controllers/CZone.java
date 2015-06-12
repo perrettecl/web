@@ -220,4 +220,22 @@ public class CZone extends Controller {
     	}
     	renderJSON(non_autorise);
     }
+    
+    public static void rechercheAutresZone(long idZone, String term) {
+    	Zone zone = Zone.findById(idZone);
+    	
+    	if(zone == null){
+    		renderJSON("{\"erreur\" : \"true\", \"message\" : \"Zones introuvables\"}");
+    	}
+    	
+    	List<Zone> liste_zone = zone.listeAutresZone(term);
+		for(Zone z : liste_zone)
+    	{
+    		z.setPeres(null);
+    		z.setFils(null);
+    		z.setResponsables(null);
+    		z.setPersonnesAutorise(null);
+    	}
+    	renderJSON(liste_zone);
+    }
 }
