@@ -160,6 +160,15 @@ public class BasicTest extends UnitTest {
 		assertTrue(new_zone.getFirstPere().id==Zone.getRacine().id);
 	}
 	
+	@Test
+	public void test_listeAutresZone() throws Exception {
+		Zone zone1 = Zone.find("byNom", "Zone1").first();
+
+		assertTrue(zone1.listeAutresZone("").size()==1);
+		assertTrue(zone1.listeAutresZone("Zone").size()==0);
+		assertTrue(zone1.listeAutresZone("Ext").size()==1);
+	}
+	
 
 	
 
