@@ -67,10 +67,10 @@ public class Zone extends Model {
 	}
 	
 	@ManyToMany
-	private Set<Zone> peres;
+	private Set<Zone> peres = new HashSet<Zone>();
 	
 	@ManyToMany(mappedBy="peres")
-	private Set<Zone> fils;
+	private Set<Zone> fils = new HashSet<Zone>();;
 	
 	
 	public String getNom() {
@@ -210,6 +210,20 @@ public class Zone extends Model {
 		this.racine = false;
 	}
 	
+	public Zone(String nom, Zone pere) {
+		this.nom = nom;
+		this.racine = false;;
+		
+		pere.fils.add(this);
+		this.peres.add(pere);
+		
+		this.save();
+		pere.save();
+		
+		this.refresh();
+		pere.refresh();
+	}
+	
 	public static Zone getRacine()
 	{
 		return Zone.find("SELECT z FROM Zone z WHERE z.racine=true").first();
@@ -277,6 +291,28 @@ public class Zone extends Model {
 		}
 		
 		return retour;
+	}
+	
+	public List<Personne> listePersonneNonResponsable(String debut_nom)
+	{
+		List<Personne> list = null;
+		Query q = Personne.em().createNativeQuery("(select p.* from PERSONNE p Where p.nom like :chaine or p.prenom like :chaine) minus (select p.* from Responsable_Zone rz, PERSONNE p where rz.zonesresponsable_id=:zone_id and rz.responsables_id=p.id )");
+		q.setParameter("zone_id", this.id);
+		q.setParameter("chaine", "%"+debut_nom+"%");
+		list = q.getResultList();
+		
+		return list;
+	}
+	
+	public List<Personne> listePersonneNonAutorise(String debut_nom)
+	{
+		List<Personne> list = null;
+		Query q = Personne.em().createNativeQuery("(select p.* from PERSONNE p Where p.nom like :chaine or p.prenom like :chaine) minus (select p.* from AUTORISE_ZONE az, PERSONNE p where az.ZONESAUTORISE_ID=:zone_id and az.PERSONNESAUTORISE_ID=p.id )");
+		q.setParameter("zone_id", this.id);
+		q.setParameter("chaine", "%"+debut_nom+"%");
+		list = q.getResultList();
+		
+		return list;
 	}
 	
 

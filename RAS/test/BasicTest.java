@@ -135,6 +135,31 @@ public class BasicTest extends UnitTest {
 		assertFalse(Zone.verifAutorisation(carte_alain,c_ext_vers_zone1));
 	}
 	
+	@Test
+	public void test_listePersonneNonResponsable() throws Exception {
+		Zone zone1 = Zone.find("byNom", "Zone1").first();
+
+		assertTrue(zone1.listePersonneNonResponsable("").size()==3);
+		assertTrue(zone1.listePersonneNonResponsable("Chantal").size()==1);
+	}
+	
+	@Test
+	public void test_listePersonneNonAutorise() throws Exception {
+		Zone zone1 = Zone.find("byNom", "Zone1").first();
+
+		assertTrue(zone1.listePersonneNonAutorise("").size()==2);
+		assertTrue(zone1.listePersonneNonAutorise("Chantal").size()==1);
+	}
+	
+	@Test
+	public void test_ajoutZone() throws Exception {
+		Zone ext = Zone.getRacine();
+		Zone new_zone = new Zone("Nouvelle_zone",ext);
+
+		assertTrue(ext.getFils().size()==2);
+		assertTrue(new_zone.getFirstPere().id==Zone.getRacine().id);
+	}
+	
 
 	
 
