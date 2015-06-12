@@ -1,8 +1,10 @@
 package controllers;
 
 import models.Capteur;
+
 import models.Personne;
 import models.Zone;
+import tools.Utils;
 import play.mvc.*;
 
 import java.util.*;
@@ -208,7 +210,7 @@ public class CZone extends Controller {
     		p.setZonesAutorise(null);
     		p.setZonesResponsable(null);
     	}
-    	renderJSON(non_responsables);
+    	renderJSON(Utils.rechercheToJSONforAutoCompletPersonne(non_responsables));
     }
     
     public static void rechercheNonAutorise(long idZone, String term) {
@@ -224,7 +226,7 @@ public class CZone extends Controller {
     		p.setZonesAutorise(null);
     		p.setZonesResponsable(null);
     	}
-    	renderJSON(non_autorise);
+    	renderJSON(Utils.rechercheToJSONforAutoCompletPersonne(non_autorise));
     }
     
     public static void rechercheAutresZone(long idZone, String term) {
@@ -242,6 +244,7 @@ public class CZone extends Controller {
     		z.setResponsables(null);
     		z.setPersonnesAutorise(null);
     	}
-    	renderJSON(liste_zone);
+    	renderJSON(Utils.rechercheToJSONforAutoCompletZone(liste_zone));
     }
+    
 }
