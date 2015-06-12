@@ -18,6 +18,7 @@ import play.libs.WS.HttpResponse;
 import play.mvc.*;
 import play.test.Fixtures;
 import models.*;
+import play.libs.mail.*;
 
 @With(Secure.class)
 public class CPersonnes extends Controller {
@@ -36,6 +37,9 @@ public class CPersonnes extends Controller {
 			if(user != null) {
 				user.resetMotDePasse();
 				user.save();
+				
+				/* envoi d'un email */
+				EnvoiMail.mail_resteMotDePasse(user);
 				
 				renderJSON("{\"erreur\" : \"false\"}");
 			} else {
