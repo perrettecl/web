@@ -15,17 +15,18 @@ public class Utils {
     	int i = 0;
     	for(i=0;i<liste.size()-1;i++){
     		Personne p = liste.get(i);
-    		strbuild.append("{ \"id\" : "+p.getPrenom()+" "+p.getNom()+", \"value\" : \""+p.id+"\"},");
+    		strbuild.append("{ \"value\" : \""+p.getPrenom()+" "+p.getNom()+"\", \"id\" : \""+p.id+"\"},");
     	}
     	
     	if(liste.size() > 0)
     	{
-    		i++;
     		Personne p = liste.get(i);
-    		strbuild.append("{ \"id\" : "+p.getPrenom()+" "+p.getNom()+", \"value\" : \""+p.id+"\"}");
+    		strbuild.append("{ \"value\" : \""+p.getPrenom()+" "+p.getNom()+"\", \"id\" : \""+p.id+"\"}");
     	}
     	
     	strbuild.append("]");
+    	
+    	System.out.println("SALUUUUUUUT");
     	
     	return strbuild.toString();
     }
@@ -38,14 +39,13 @@ public class Utils {
     	int i = 0;
     	for(i=0; i<liste.size()-1; i++){
     		Zone z = liste.get(i);
-    		strbuild.append("{ \"id\" : "+z.getNom()+", \"value\" : \""+z.id+"\"},");
+    		strbuild.append("{ \"value\" : \""+z.getNom()+"\", \"id\" : \""+z.id+"\"},");
     	}
     	
     	if(liste.size() > 0)
     	{
-    		i++;
     		Zone z = liste.get(i);
-    		strbuild.append("{ \"id\" : "+z.getNom()+", \"value\" : \""+z.id+"\"}");
+    		strbuild.append("{ \"value\" : \""+z.getNom()+"\", \"id\" : \""+z.id+"\"}");
     	}
     	
     	strbuild.append("]");
