@@ -14,18 +14,27 @@
 			<div class="nav-wrapper">
 				<a href="@{Application.index}" class="brand-logo">Remote Access Security</a>
 				<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+				#{secure.check "connected"}
 				<ul class="right hide-on-med-and-down">
 					<li class="right"><a href="@{Secure.logout()}"  class="waves-effect waves-light btn btn-banner">Se déconnecter</a></li>
 				</ul>
+				#{/secure.check}
 				<ul class="right hide-on-med-and-down">
-					<li><a href="@{CPersonnes.utilisateurs}">Utilisateurs</a></li>
+					<li><a href="@{CTestAutorisation.index}">Test</a></li>
+					#{secure.check "connected"}
 					<li><a href="@{CZone.zones}">Zones</a></li>
+					<li><a href="@{CPersonnes.utilisateurs}">Utilisateurs</a></li>
+					#{/secure.check}
 				</ul>
 				<ul class="side-nav" id="mobile-demo">
-					<li><a href="@{CPersonnes.utilisateurs}">Utilisateurs</a></li>
+					<li><a href="@{CTestAutorisation.index}">Test</a></li>
+					#{secure.check "connected"}
 					<li><a href="@{CZone.zones}">Zones</a></li>
+					<li><a href="@{CPersonnes.utilisateurs}">Utilisateurs</a></li>
 					<li><a href="@{Secure.logout()}"  class="waves-effect waves-light btn btn-banner">Se déconnecter</a></li>
+					#{/secure.check}
 				</ul>
+				
 			</div>
 		</nav>
         #{doLayout /}

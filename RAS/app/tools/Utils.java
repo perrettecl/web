@@ -25,9 +25,7 @@ public class Utils {
     	}
     	
     	strbuild.append("]");
-    	
-    	System.out.println("SALUUUUUUUT");
-    	
+        	
     	return strbuild.toString();
     }
     

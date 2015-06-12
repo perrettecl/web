@@ -13,6 +13,11 @@ public class Security extends Secure.Security {
     	}else{
     		return user.verifMotDePasse(password);
     	}
+    	
     }
     
+    static boolean check(String profile) {
+    	return connected() != null;
+    }
+
 }

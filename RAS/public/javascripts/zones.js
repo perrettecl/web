@@ -34,7 +34,7 @@ function afficherZone(id) {
 			}
 		});
 	}
-	  
+
 	if(typeof $("#nouvelle-autorisation") !== undefined) {
 	  
 		$( "#nouvelle-autorisation" ).autocomplete({
@@ -46,7 +46,19 @@ function afficherZone(id) {
 		});
 	}
 	
+	if(typeof $("#zone-nv-capteur") !== undefined) {
+	  
+		$( "#zone-nv-capteur" ).autocomplete({
+			source: "/CZone/rechercheAutresZone?idZone=" + id,
+			minLength: 2,
+			select: function( event, ui ) {
+				$( "#id-zone-nv-capteur" ).val(ui.item.id);
+			}
+		});
+	}
 }
+
+
 
 function modifierNomZone(idZone) {
 	var nomZone = $("#spanNomZone").html();
@@ -142,6 +154,7 @@ function ajouterResponsable(idZone) {
 			success: 	function(data) {
 							if(data["erreur"] == "false") {
 								Materialize.toast('<span>Responsable ajouté</span>&nbsp;<i class="mdi-action-done prefix active"></i>', 5000, 'green');
+								afficherZone(idZone);
 							} else if (data["erreur"] == "true") {
 								$.each(data, function(i, field){
 									if(i != "erreur")
@@ -167,6 +180,7 @@ function removeResponsableZone(idZone, idPersonne) {
 					},
 			success: 	function(data) {
 							if(data["erreur"] == "false") {
+								afficherZone(idZone);
 								Materialize.toast('<span>Responsable supprimé</span>&nbsp;<i class="mdi-action-done prefix active"></i>', 5000, 'green');
 							} else if (data["erreur"] == "true") {
 								$.each(data, function(i, field){
@@ -180,6 +194,36 @@ function removeResponsableZone(idZone, idPersonne) {
 	}
 }
 
+function ajouterAutorisation(idZone) {
+	var idNvAutorisation = $("#id-nouvelle-autorisation").val();
+	
+	if(idNvAutorisation != "") {
+		$.ajax({
+			type: "POST",
+			url: "/CZone/ajouterAutorisationAcces",
+			data: 	{ 
+						'idZone' : idZone,
+						'idPersonne' : idNvAutorisation
+					},
+			success: 	function(data) {
+							if(data["erreur"] == "false") {
+								Materialize.toast('<span>Autorisation ajoutée</span>&nbsp;<i class="mdi-action-done prefix active"></i>', 5000, 'green');
+								afficherZone(idZone);
+							} else if (data["erreur"] == "true") {
+								$.each(data, function(i, field){
+									if(i != "erreur")
+										Materialize.toast('<i class="mdi-navigation-close prefix active"></i>&nbsp;<span>' + field + '</span>', 5000, 'red');
+								});
+							}
+					 	},
+			dataType: 'json'
+		});
+	} else {
+		Materialize.toast('<i class="mdi-navigation-close prefix active"></i>&nbsp;<span>Veuillez sélectionner un utilisateur à autoriser</span>', 5000, 'red');
+	}
+}
+
+
 function removeAutorisationZone(idZone, idPersonne) {
 	if(confirm("Êtes-vous sûr de vouloir supprimer cette autorisation pour la zone?")) {
 		$.ajax({
@@ -191,6 +235,7 @@ function removeAutorisationZone(idZone, idPersonne) {
 					},
 			success: 	function(data) {
 							if(data["erreur"] == "false") {
+								afficherZone(idZone);
 								Materialize.toast('<span>Autorisation supprimée</span>&nbsp;<i class="mdi-action-done prefix active"></i>', 5000, 'green');
 							} else if (data["erreur"] == "true") {
 								$.each(data, function(i, field){
@@ -201,5 +246,34 @@ function removeAutorisationZone(idZone, idPersonne) {
 					 	},
 			dataType: 'json'
 		});
+	}
+}
+
+function ajouterCapteur(idZone) {
+	var idZoneNvCapteur = $("#id-zone-nv-capteur").val();
+	
+	if(idZoneNvCapteur != "") {
+		$.ajax({
+			type: "POST",
+			url: "/CZone/ajouterCapteurZone",
+			data: 	{ 
+						'idZoneFrom' : idZone,
+						'idZoneTo' : idZoneNvCapteur
+					},
+			success: 	function(data) {
+							if(data["erreur"] == "false") {
+								Materialize.toast('<span>Capteur ajouté</span>&nbsp;<i class="mdi-action-done prefix active"></i>', 5000, 'green');
+								afficherZone(idZone);
+							} else if (data["erreur"] == "true") {
+								$.each(data, function(i, field){
+									if(i != "erreur")
+										Materialize.toast('<i class="mdi-navigation-close prefix active"></i>&nbsp;<span>' + field + '</span>', 5000, 'red');
+								});
+							}
+					 	},
+			dataType: 'json'
+		});
+	} else {
+		Materialize.toast('<i class="mdi-navigation-close prefix active"></i>&nbsp;<span>Veuillez sélectionner une zone de destination</span>', 5000, 'red');
 	}
 }

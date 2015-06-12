@@ -1,0 +1,29 @@
+#{extends 'main.html' /}
+#{set title:'Fiche utilisateur' /}
+
+<div class="row">
+	<section class="col s12 offset-m1 m10 offset-l2 l8  corps col s12 m12 l10" id="corps">
+		<form>
+			<div class="row">
+		        <div class="input-field col s12 m10 l8">
+		          <input id="numeroCarte" type="text" class="validate">
+		          <label for="numeroCarte">Numéro de carte</label>
+		        </div>
+		        <div class="input-field col s12 m10 l8">
+		          <input id="idCapteur" type="text" class="validate">
+		          <label for="idCapteur">Numéro de capteur</label>
+		        </div>
+		        <div class="input-field col s12 m10 l8">
+					<a class="waves-effect waves-light btn green" href="javascript:testerAutorisation()">Tester</a>
+				</div>
+		    </div>
+		</form>
+	</section>
+</div>
+
+<!-- jQuery is required by Materialize to function -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="@{'/public/materialize/js/materialize.min.js'}"></script>
+<script type="text/javascript" src="@{'/public/javascripts/testAutorisation.js'}"></script>
+<script type="text/javascript">
+</script>

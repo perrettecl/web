@@ -1,7 +1,7 @@
-secure.title=
-secure.username=Username:
-secure.password=Password:
-secure.remember=Remember me
-secure.signin=Sign in
-secure.error=Oops, unknown username or password.
-secure.logout=You have been logged out.
+secure.title=RAS Connexion
+secure.username=Email
+secure.password=Mot de passe
+secure.remember=Se souvenir de moi
+secure.signin=Envoyer
+secure.error=Email ou mot de passe inconnu
+secure.logout=Vous avez été déconnecté

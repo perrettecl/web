@@ -1,37 +1,44 @@
-#{extends 'Secure/layout.html' /}
+#{extends 'main.html' /}
+#{set title:'RAS - Connexion' /}
 #{get 'moreStyles' /}
 
-<div id="login">
-<div class="col m12">
-<div class="col center">
-	
-	<h1>&{'secure.title'}</h1>
-		
+<div class="row">
+	<section class="col s12 offset-m1 m10 offset-l2 l8  corps col s12 m12 l10" id="corps">
 	#{form @authenticate()}
-		
+		<div class="card-panel red lighten-1 col s12 m10 l8">
 		#{if flash.error}
 			<p class="error">
 				&{flash.error}
 			</p>
 		#{/if}
+		</div>
+		<div class="card-panel green lighten-1 col s12 m10 l8">
 		#{if flash.success}
 			<p class="success">
 				&{flash.success}
 			</p>
 		#{/if}
-	
-		<p id="username-field">
+		</div>
+		<div class="input-field col s12 m10 l8">
 			<label for="username">&{'secure.username'}</label>
-			<input type="text" name="username" id="username" value="${flash.username}" />
-		</p>
-		<p id="password-field">
+			<input type="text" name="username" id="username" value="${flash.username}" class="validate"/>
+		</div>
+		<div class="input-field col s12 m10 l8">
 			<label for="password">&{'secure.password'}</label>
-			<input type="password" name="password" id="password" value="" />
-		</p>
-		<p id="signin-field">
-			<input type="submit" id="signin" value="&{'secure.signin'}" />
-		</p>
+			<input type="password" name="password" id="password" value="" class="validate"/>
+		</div>
+		<div class="input-field col s12 m10 l8">
+			<a href="javascript:envoyer()" id="signin" class="waves-effect waves-light btn right" value="&{'secure.signin'}">Envoyer</a>
+		</div>
 	#{/form}
-	</div>
-	</div>
+	</section>
 </div>
+
+<!-- jQuery is required by Materialize to function -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="@{'/public/materialize/js/materialize.min.js'}"></script>
+<script type="text/javascript">
+function envoyer() {
+	$("form").submit();
+}
+</script>

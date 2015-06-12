@@ -10,8 +10,8 @@
 	    	<table class="hoverable responsive-table">
 	        	<thead>
 					<tr>
-						<th>Nom</th>
 						<th>Prénom</th>
+						<th>Nom</th>
 						<th>Adresse email</th>
 						<th>Téléphone</th>
 						<th>&nbsp;</th>
@@ -20,8 +20,8 @@
 				<tbody>
 					#{list zone.getResponsables(), as:'user'}
 					<tr>
-						<td>${user.nom}</td>
 						<td>${user.prenom}</td>
+						<td>${user.nom}</td>
 						<td>${user.email}</td>
 						<td>${user.telephone}</td>
 						<td>
@@ -45,7 +45,7 @@
 					<input type="hidden" id="id-nouveau-responsable" name="id-nouveau-responsable" />
 				</div>
 				<div class="input-field col s12 m4 l6">
-					<a class="waves-effect waves-light btn green">Ajouter</a>
+					<a class="waves-effect waves-light btn green" href="javascript:ajouterResponsable(${zone.id})">Ajouter</a>
 				</div>
 			</div>
 		</form>
@@ -60,8 +60,8 @@
 	    	<table class="hoverable responsive-table">
 	        	<thead>
 					<tr>
-						<th>Nom</th>
 						<th>Prénom</th>
+						<th>Nom</th>
 						<th>Adresse email</th>
 						<th>Téléphone</th>
 						<th>&nbsp;</th>
@@ -70,8 +70,8 @@
 				<tbody>
 					#{list zone.getPersonnesAutorise(), as:'user'}
 					<tr>
-						<td>${user.nom}</td>
 						<td>${user.prenom}</td>
+						<td>${user.nom}</td>						
 						<td>${user.email}</td>
 						<td>${user.telephone}</td>
 						<td>
@@ -96,7 +96,7 @@
 					<input type="hidden" id="id-nouvelle-autorisation" name="id-nouvelle-autorisation" />
 				</div>
 				<div class="input-field col s12 m4 l6">
-					<a class="waves-effect waves-light btn green">Ajouter</a>
+					<a class="waves-effect waves-light btn green" href="javascript:ajouterAutorisation(${zone.id})">Ajouter</a>
 				</div>
 			</div>
 		</form>
@@ -128,22 +128,16 @@
 		</table>
 	#{/else}
 	
-	<h5>Ajouter un capteur</h5>
+	<h5>Ajouter un capteur donnant accès à</h5>
 	<form class="col s12">
 		<div class="row">
-			<div class="input-field col s12 m6 l6">
-				<select class="browser-default" id="selectIdZoneTo" name="selectIdZoneTo">
-					<option value="" disabled selected>Vers la zone</option>
-				#{list zone.getFils(), as:'zoneFils'}
-					<option value="${zoneFils.id}">${zoneFils.nom}</option>
-				#{/list}
-				#{list zone.getPeres(), as:'zonePeres'}
-					<option value="${zonePeres.id}">${zonePeres.nom}</option>
-				#{/list}
-				</select>
+			<div class="input-field col s12 m8 l6">
+				<i class="mdi-action-account-circle prefix"></i>
+				<input type="text" id="zone-nv-capteur" name="zone-nv-capteur" placeHolder="Tapez le nom d'une zone pour la rechercher" />
+				<input type="hidden" id="id-zone-nv-capteur" name="id-zone-nv-capteur" />
 			</div>
 			<div class="input-field col s12 m4 l6">
-				<a class="waves-effect waves-light btn green">Ajouter</a>
+				<a class="waves-effect waves-light btn green" href="javascript:ajouterCapteur(${zone.id})">Ajouter</a>
 			</div>
 		</div>
 	</form>
