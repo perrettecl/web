@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+    <channel>
+        <title>RAS</title>
+        <description>100 derniers évenements</description>
+        <lastBuildDate>${date}</lastBuildDate>
+        <link>http://www.ras.fr</link>
+        #{list evenements, as:'evenement'}
+        <item>
+            <title>${evenement.description}</title>
+            <description>${evenement.description} | ${evenement.date}</description>
+            <pubDate>${evenement.date}</pubDate>
+        </item>
+        #{/list}
+    </channel>
+</rss>
