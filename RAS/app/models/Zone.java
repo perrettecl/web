@@ -67,10 +67,10 @@ public class Zone extends Model {
 	}
 	
 	@ManyToMany
-	private Set<Zone> peres;
+	private Set<Zone> peres = new HashSet<Zone>();
 	
 	@ManyToMany(mappedBy="peres")
-	private Set<Zone> fils;
+	private Set<Zone> fils = new HashSet<Zone>();;
 	
 	
 	public String getNom() {
@@ -212,9 +212,16 @@ public class Zone extends Model {
 	
 	public Zone(String nom, Zone pere) {
 		this.nom = nom;
-		this.racine = false;
-		this.peres.add(pere);
+		this.racine = false;;
+		
 		pere.fils.add(this);
+		this.peres.add(pere);
+		
+		this.save();
+		pere.save();
+		
+		this.refresh();
+		pere.refresh();
 	}
 	
 	public static Zone getRacine()
@@ -294,12 +301,6 @@ public class Zone extends Model {
 		q.setParameter("chaine", "%"+debut_nom+"%");
 		list = q.getResultList();
 		
-		for(Personne p : list)
-    	{
-    		p.setZonesAutorise(null);
-    		p.setZonesResponsable(null);
-    	}
-		
 		return list;
 	}
 	
@@ -311,11 +312,6 @@ public class Zone extends Model {
 		q.setParameter("chaine", "%"+debut_nom+"%");
 		list = q.getResultList();
 		
-		for(Personne p : list)
-    	{
-    		p.setZonesAutorise(null);
-    		p.setZonesResponsable(null);
-    	}
 		return list;
 	}
 	

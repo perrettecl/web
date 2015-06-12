@@ -151,6 +151,15 @@ public class BasicTest extends UnitTest {
 		assertTrue(zone1.listePersonneNonAutorise("Chantal").size()==1);
 	}
 	
+	@Test
+	public void test_ajoutZone() throws Exception {
+		Zone ext = Zone.getRacine();
+		Zone new_zone = new Zone("Nouvelle_zone",ext);
+
+		assertTrue(ext.getFils().size()==2);
+		assertTrue(new_zone.getFirstPere().id==Zone.getRacine().id);
+	}
+	
 
 	
 

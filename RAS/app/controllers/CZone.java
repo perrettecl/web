@@ -62,15 +62,9 @@ public class CZone extends Controller {
     		
     		if(zoneParente != null) {
 	    		if(!nom.equals("")) {
-	    			Zone zone = new Zone(nom);
 	    			
-	    			zone.getPeres().add(zoneParente);
-	    			zoneParente.getFils().add(zone);
+	    			Zone zone = new Zone(nom,zoneParente);
 	    			
-	    			zone.save();
-	    			zoneParente.save();
-
-	    			System.out.println(zone);
 	    			renderJSON("{\"erreur\" : \"false\"}");
 	    		} else {
 	    			renderJSON("{\"erreur\" : \"true\", \"message\" : \"Le nom de la zone ne peut pas être vide\"}");
@@ -203,6 +197,11 @@ public class CZone extends Controller {
     		renderJSON("{\"erreur\" : \"true\", \"message\" : \"Zones introuvables\"}");
     	}
     	List<Personne> non_responsables = zone.listePersonneNonResponsable(term);
+		for(Personne p : non_responsables)
+    	{
+    		p.setZonesAutorise(null);
+    		p.setZonesResponsable(null);
+    	}
     	renderJSON(non_responsables);
     }
     
@@ -214,6 +213,11 @@ public class CZone extends Controller {
     	}
     	
     	List<Personne> non_autorise = zone.listePersonneNonAutorise(term);
+		for(Personne p : non_autorise)
+    	{
+    		p.setZonesAutorise(null);
+    		p.setZonesResponsable(null);
+    	}
     	renderJSON(non_autorise);
     }
 }
