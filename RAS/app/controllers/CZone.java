@@ -108,7 +108,10 @@ public class CZone extends Controller {
     		
     		if(user != null) {
     			if(zone.verifResponsable(current_user)) {
-    				zone.addPersonneAutorise(user);
+    				if(!zone.verifAutorise(user))
+    					zone.addPersonneAutorise(user);
+    				else
+    					renderJSON("{\"erreur\" : \"true\", \"message\" : \"Utilisateur déjà autorisé dans la zone\"}");
     			} else {
     				renderJSON("{\"erreur\" : \"true\", \"message\" : \"L'utilisateur n'est pas responsable de la zone\"}");
     			}
@@ -148,7 +151,10 @@ public class CZone extends Controller {
         		Personne user = Personne.findById(idPersonne);
         		
         		if(user != null) {
+        			if(!zone.verifResponsable(user))
         				zone.addResponsable(user);
+        			else
+        				renderJSON("{\"erreur\" : \"true\", \"message\" : \"Utilisateur déjà responsable de la zone\"}");
         		} else {
         			renderJSON("{\"erreur\" : \"true\", \"message\" : \"Utilisateur introuvable\"}");
         		}

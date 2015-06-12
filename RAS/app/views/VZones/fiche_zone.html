@@ -39,7 +39,7 @@
 			<div class="row">
 				<div class="input-field col s12 m8 l6">
 					<i class="mdi-action-account-circle prefix"></i>
-					<input type="text" id="nouveau-responsable" name="nouveau-responsable" placeHolder="Tapez le nom d'un utilisateur pour le rechercher" />
+					<input type="text" class="form-control ui-autocomplete-input" autocomplete="off" id="nouveau-responsable" name="nouveau-responsable" placeHolder="Tapez le nom d'un utilisateur pour le rechercher" />
 					<input type="hidden" id="id-nouveau-responsable" name="id-nouveau-responsable" />
 				</div>
 				<div class="input-field col s12 m4 l6">
@@ -104,15 +104,15 @@
     	<table class="hoverable responsive-table">
         	<thead>
 				<tr>
-					<th>Numéro</th>
 					<th>Vers</th>
+					<th>Numéro</th>
 				</tr>
 			</thead>
 			<tbody>
 				#{list zone.getCapteurDeLaZone(), as:'capteur'}
 				<tr>
-					<td>${capteur.id}</td>
 					<td>${capteur.acces.nom}</td>
+					<td>${capteur.id}</td>
 				</tr>
 				#{/list}
 			<tbody>
@@ -123,11 +123,13 @@
 	<form class="col s12">
 		<div class="row">
 			<div class="input-field col s12 m6 l6">
-
-				<select id="selectIdZoneTo" name="selectIdZoneTo">
-					<option value="" disabled>Vers la zone</option>
+				<select class="browser-default" id="selectIdZoneTo" name="selectIdZoneTo">
+					<option value="" disabled selected>Vers la zone</option>
 				#{list zone.getFils(), as:'zoneFils'}
 					<option value="${zoneFils.id}">${zoneFils.nom}</option>
+				#{/list}
+				#{list zone.getPeres(), as:'zonePeres'}
+					<option value="${zonePeres.id}">${zonePeres.nom}</option>
 				#{/list}
 				</select>
 			</div>
