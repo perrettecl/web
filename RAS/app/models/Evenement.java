@@ -24,4 +24,11 @@ public class Evenement extends Model {
 	public String getDescription() {
 		return Description;
 	}
+	
+	public static List<Evenement> get100DernierEvenements()
+	{
+		Query q = Evenement.em().createQuery("SELECT e FROM Evenement e ORDER BY e.date DESC",Evenement.class);
+		q.setMaxResults(100);
+		return q.getResultList();
+	}
 }
