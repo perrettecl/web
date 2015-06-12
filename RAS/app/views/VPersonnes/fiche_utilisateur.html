@@ -7,37 +7,37 @@
 			<div class="input-field col s12 m6 l6">
 				<i class="mdi-action-account-circle prefix"></i>
 				<input type="text" class="validate" id="nom" name="nom" value="${user.nom}" #{if !isAdmin} disabled #{/if}>
-				<label for="nom">Nom</label>
+				<label for="nom" class="active">Nom</label>
 			</div>
 			<div class="input-field col s12 m6 l6">
 				<i class="mdi-action-account-circle prefix"></i>
 				<input type="text" class="validate" id="prenom" name="prenom" value="${user.prenom}" #{if !isAdmin} disabled #{/if}>
-				<label for="prenom">Prénom</label>
+				<label for="prenom" class="active">Prénom</label>
 			</div>
 			<div class="input-field col s12 m6 l6">
 				<i class="mdi-communication-email prefix"></i>
 				<input type="email" class="validate" id="email" name="email" value="${user.email}" disabled>
-				<label for="email">Email</label>
+				<label for="email" class="active">Email</label>
 			</div>
 			<div class="input-field col s12 m6 l6">
 				<i class="mdi-communication-phone prefix"></i>
 				<input type="tel" class="validate" id="telephone" name="telephone" value="${user.telephone}" #{if !isAdmin} disabled #{/if}>
-				<label for="telephone">Téléphone</label>
+				<label for="telephone" class="active">Téléphone</label>
 			</div>
 			<div class="input-field col s12 m12 l12">
 				<i class="mdi-communication-business prefix"></i>
 				<input  type="text" class="validate" id="adresse" name="adresse" value="${user.adresse}" #{if !isAdmin} disabled #{/if}>
-				<label for="adresse">Adresse</label>
+				<label for="adresse" class="active">Adresse</label>
 			</div>
 			<div class="input-field col s12 m6 l6">
 				<i class="mdi-communication-business prefix"></i>
 				<input  type="text" class="validate" id="code-postal" name="code-postal" value="${user.codePostal}" #{if !isAdmin} disabled #{/if}>
-				<label for="code-postal">Code postal</label>
+				<label for="code-postal" class="active">Code postal</label>
 			</div>
 			<div class="input-field col s12 m6 l6">
 				<i class="mdi-communication-business prefix"></i>
 				<input type="text" class="validate" id="ville" name="ville" value="${user.ville}" #{if !isAdmin} disabled #{/if}>
-				<label for="ville">Ville</label>
+				<label for="ville" class="active">Ville</label>
 			</div>
 			#{if isAdmin}
 			<a class="btn waves-effect waves-light green right" href="javascript:envoyerFormulaireModification(${user.id})">Modifier
@@ -114,6 +114,7 @@
 		</table>
 	#{/else}
 </fieldset>
+#{if (user.id == current_user_id) || isAdmin}
 <fieldset id="fieldset-cartes">
 	<legend>Cartes</legend>
 	#{if user.getCartes().size() == 0}
@@ -164,3 +165,4 @@
 		</a>
 	</div>
 </fieldset>
+#{/if}

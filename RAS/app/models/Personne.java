@@ -186,6 +186,10 @@ public class Personne extends Model {
 	}
 
 
+	public void setCartes(Set<Carte> cartes) {
+		this.cartes = cartes;
+	}
+
 	public Set<Zone> getZonesResponsable() {
 		return zonesResponsable;
 	}

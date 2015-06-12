@@ -1,4 +1,4 @@
-<h1 id="titreZone"><span id="spanNomZone">${zone.nom}</span> #{if isAdmin && !zone.isRacine()}<a class="btn-floating waves-effect waves-light grey" href="javascript:modifierNomZone(${zone.id})"><i class="tiny mdi-image-edit"></i></a>#{/if}</h1>
+<h1 id="titreZone"><span id="spanNomZone">${zone.nom}</span> #{if isAdmin && !zone.isRacine()}<a class="btn-floating waves-effect waves-light grey" href="javascript:modifierNomZone(${zone.id})"><i class="tiny mdi-image-edit" title="Renommer la zone"></i></a>#{/if}</h1>
 
 #{if !zone.isRacine()}
 	<fieldset>
@@ -26,7 +26,9 @@
 						<td>${user.telephone}</td>
 						<td>
 							<a class="btn-floating waves-effect waves-light blue" href="/CPersonnes/utilisateurs?in=${user.id}"><i class="tiny mdi-content-forward" title="Voir détails"></i></a>
-							<a class="btn-floating waves-effect waves-light red" href="javascript:removeResponsableZone(${user.id}, ${zone.id})"><i class="tiny mdi-navigation-close" title="Supprimer"></i></a>
+						#{if isAdmin}
+							<a class="btn-floating waves-effect waves-light red" href="javascript:removeResponsableZone(${zone.id}, ${user.id})"><i class="tiny mdi-navigation-close" title="Supprimer"></i></a>
+						#{/if}
 						</td>
 					</tr>
 					#{/list}
@@ -62,6 +64,7 @@
 						<th>Prénom</th>
 						<th>Adresse email</th>
 						<th>Téléphone</th>
+						<th>&nbsp;</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -71,6 +74,12 @@
 						<td>${user.prenom}</td>
 						<td>${user.email}</td>
 						<td>${user.telephone}</td>
+						<td>
+							<a class="btn-floating waves-effect waves-light blue" href="/CPersonnes/utilisateurs?in=${user.id}"><i class="tiny mdi-content-forward" title="Voir détails"></i></a>
+						#{if isResponsable}
+							<a class="btn-floating waves-effect waves-light red" href="javascript:removeAutorisationZone(${zone.id}, ${user.id})"><i class="tiny mdi-navigation-close" title="Supprimer"></i></a>
+						#{/if}
+						</td>
 					</tr>
 					#{/list}
 				<tbody>

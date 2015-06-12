@@ -207,6 +207,7 @@ public class CZone extends Controller {
     	{
     		p.setZonesAutorise(null);
     		p.setZonesResponsable(null);
+    		p.setCartes(null);
     	}
     	renderJSON(non_responsables);
     }

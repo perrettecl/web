@@ -13,14 +13,25 @@
 	    <nav>
 			<div class="nav-wrapper">
 				<a href="@{Application.index}" class="brand-logo">Remote Access Security</a>
+				<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
 				<ul class="right hide-on-med-and-down">
+					<li class="right"><a href="@{Secure.logout()}"  class="waves-effect waves-light btn btn-banner">Se déconnecter</a></li>
+				</ul>
+				<ul class="right hide-on-med-and-down">
+					<li><a href="@{CPersonnes.utilisateurs}">Utilisateurs</a></li>
+					<li><a href="@{CZone.zones}">Zones</a></li>
+				</ul>
+				<ul class="side-nav" id="mobile-demo">
+					<li><a href="@{CPersonnes.utilisateurs}">Utilisateurs</a></li>
+					<li><a href="@{CZone.zones}">Zones</a></li>
 					<li><a href="@{Secure.logout()}"  class="waves-effect waves-light btn btn-banner">Se déconnecter</a></li>
 				</ul>
 			</div>
 		</nav>
         #{doLayout /}
-
-        <script src="@{'/public/javascripts/jquery-1.6.4.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
         #{get 'moreScripts' /}
+        <script type="text/javascript">
+           $(".button-collapse").sideNav();
+        </script>
     </body>
 </html>

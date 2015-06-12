@@ -29,6 +29,11 @@ nav ul li:hover
 	background-color: black;
 }
 
+.a-nav-back
+{
+	text-align: center;
+}
+
 .btn 
 {
 	margin-top: 5px;
