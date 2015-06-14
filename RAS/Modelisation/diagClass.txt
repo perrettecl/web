@@ -1,0 +1,13 @@
+// Cool Class Diagram
+[Carte|numero : string;date de creation : date;date de validité:date; valide : boolean]
+[Personne|email : string;nom : string;prenom : string;mot de passe : string; adresse : string; code postal : string; ville : string; admin : boolean]
+[Zone|nom : string;racine : boolean]
+[Capteur| id : long]
+[Carte]0..*-1[Personne]
+[Capteur]0..*-1[Zone]
+[Capteur]0..*-1[Zone]
+[Zone]0..*-0..*[Personne]
+[Zone]0..*-0..*[Personne]
+[Zone]0..1-0..*[Zone]
+[Zone]-[note: La zone possede une liste des personnes autorises a y entrer et une liste des personnes responsable de celle-ci. Elle connait aussi ses enfants et son pere{bg:wheat}]
+[Capteur]-[note: Le capteur possede la zone ou il est positionne et la zone vers lequel il donne acces{bg:wheat}]
