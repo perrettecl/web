@@ -3,6 +3,7 @@
 [Personne|email : string;nom : string;prenom : string;mot de passe : string; adresse : string; code postal : string; ville : string; admin : boolean]
 [Zone|nom : string;racine : boolean]
 [Capteur| id : long]
+[Evenement| date evenement : date; description : string]
 [Carte]0..*-1[Personne]
 [Capteur]0..*-1[Zone]
 [Capteur]0..*-1[Zone]
