@@ -114,3 +114,13 @@ fieldset
 {
 	text-align: center;
 }
+
+.success
+{
+	color : white;
+}
+
+.error
+{
+	color : white;
+}
